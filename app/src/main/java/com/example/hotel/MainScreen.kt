@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.hotel.databinding.MainScreenBinding
+import com.example.hotel.pageradapter.PagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainScreen: Fragment(){
@@ -43,13 +44,6 @@ class MainScreen: Fragment(){
         )
     )
 
-    private val photosHotel = listOf(
-        R.drawable.hotel1,
-        R.drawable.hotel2,
-        R.drawable.hotel3,
-        R.drawable.hotel4
-    )
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -61,7 +55,7 @@ class MainScreen: Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = ImageAdapter(photosHotel)
+        val adapter = PagerAdapter(hotel.image_urls)
         binding.vpHotel.adapter = adapter
         TabLayoutMediator(binding.tabLayout, binding.vpHotel) { tab, position ->
         }.attach()

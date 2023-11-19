@@ -1,18 +1,22 @@
-package com.example.hotel
+package com.example.hotel.pageradapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.hotel.R
 
-class ImageAdapter(private val images: List<Int>) : RecyclerView.Adapter<ImageViewHolder>() {
+class PagerAdapter(private val images: List<String>) : RecyclerView.Adapter<ImageViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.photo_hotel, parent, false)
         return ImageViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
-        val imageRes = images[position]
-        holder.imageView.setImageResource(imageRes)
+        val imageUrl = images[position]
+        Log.i("MyTag", "imageUrl $imageUrl")
+        Glide.with(holder.itemView.context).load(imageUrl).into(holder.imageView)
     }
 
     override fun getItemCount(): Int {
