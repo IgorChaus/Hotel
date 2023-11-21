@@ -5,5 +5,5 @@
     android:id="@+id/container_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:name="com.example.hotel.RoomListScreen"
+    android:name="com.example.hotel.RoomScreen"
     tools:context=".MainActivity" />

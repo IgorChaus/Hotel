@@ -1,4 +1,4 @@
-package com.example.hotel
+package com.example.hotel.model
 
 data class Room(
     val id: Int,

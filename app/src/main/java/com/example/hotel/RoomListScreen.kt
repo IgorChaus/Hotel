@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.hotel.databinding.RoomListScreenBinding
 import com.example.hotel.listadapter.RoomListAdapter
+import com.example.hotel.model.Room
 
 
 class RoomListScreen: Fragment() {
+
+    private val hotelName = "Steigenberger Makadi" //Исправить
 
     private var _binding: RoomListScreenBinding? = null
     private val binding: RoomListScreenBinding
@@ -76,6 +79,7 @@ class RoomListScreen: Fragment() {
         val adapter = RoomListAdapter()
         adapter.submitList(rooms)
         binding.rv.adapter = adapter
+        binding.tvHotelName.text = hotelName
     }
 
 

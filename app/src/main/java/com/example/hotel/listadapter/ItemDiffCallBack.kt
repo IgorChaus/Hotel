@@ -1,7 +1,7 @@
 package com.example.hotel.listadapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.hotel.Room
+import com.example.hotel.model.Room
 
 object ItemDiffCallBack : DiffUtil.ItemCallback<Room>() {
     override fun areItemsTheSame(oldItem: Room, newItem: Room): Boolean {

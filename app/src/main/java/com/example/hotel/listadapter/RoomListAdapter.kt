@@ -2,7 +2,6 @@ package com.example.hotel.listadapter
 
 import android.util.TypedValue
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.LinearLayout
@@ -10,7 +9,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ListAdapter
 import com.example.hotel.R
-import com.example.hotel.Room
+import com.example.hotel.model.Room
 import com.example.hotel.databinding.ItemRoomBinding
 import com.example.hotel.pageradapter.PagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator

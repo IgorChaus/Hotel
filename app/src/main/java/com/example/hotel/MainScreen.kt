@@ -1,6 +1,7 @@
 package com.example.hotel
 
 import android.os.Bundle
+import android.util.Patterns
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.hotel.databinding.MainScreenBinding
+import com.example.hotel.model.Hotel
 import com.example.hotel.pageradapter.PagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -69,6 +71,7 @@ class MainScreen: Fragment(){
         binding.tvDescriptionHotel.text = hotel.about_the_hotel.description
 
         setPeculiaritiesLayout(view)
+
 
     }
 
@@ -134,6 +137,8 @@ class MainScreen: Fragment(){
             }
         })
     }
+
+    fun isValidEmail(email: String) = email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
     override fun onDestroyView() {
         super.onDestroyView()
