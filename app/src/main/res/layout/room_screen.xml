@@ -55,6 +55,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <include
+            android:id="@+id/total_price"
+            layout="@layout/total_price"/>
 
     </LinearLayout>
 </ScrollView>

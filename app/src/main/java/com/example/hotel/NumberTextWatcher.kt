@@ -41,7 +41,6 @@ class NumberTextWatcher(private var mask: String) : TextWatcher {
         val maskPlaceholderCharCount = mask.count { it == MASK_CHAR }
         var maskCurrentCharIndex = 0
         var output = ""
-        Log.i("MyTag", "onlyDigits $onlyDigits")
         onlyDigits.take(Integer.min(maskPlaceholderCharCount, onlyDigits.length)).forEach { c ->
             for (i in maskCurrentCharIndex until mask.length) {
                 if (mask[i] == MASK_CHAR) {

@@ -1,6 +1,7 @@
 package com.example.hotel
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,8 @@ class TouristsFragment: Fragment() {
 
     private val touristsInfoFragment = TouristsInfo.getInstance()
 
+    var scrollListener: (() -> Unit)? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +31,12 @@ class TouristsFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val scrollView = view?.findViewById<ScrollView>(R.id.sv_scroll)
+        Log.i("MyTag", "TouristsFragment onViewCreated")
+
+        if (savedInstanceState != null) {
+            val buttonVisibility = savedInstanceState.getInt("buttonVisibility")
+            binding.containerButton.visibility = buttonVisibility
+        }
 
         val touristsNumber = requireArguments().getInt(KEY_TOURISTS_NUMBER, 1)
         binding.tvTouristNumber.text = "${numberToOrdinalRussian(touristsNumber)} турист"
@@ -56,12 +64,16 @@ class TouristsFragment: Fragment() {
             childFragmentManager.beginTransaction()
                 .add(R.id.container_tourists_add, TouristsFragment.getInstance(touristsNumber + 1))
                 .commit()
-            binding.cotainerButton.visibility = View.GONE
+            binding.containerButton.visibility = View.GONE
+            Log.i("MyTag","scrollListener $scrollListener")
+            scrollListener?.invoke()
         }
 
+    }
 
-
-
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("buttonVisibility", binding.containerButton.visibility)
     }
 
     fun numberToOrdinalRussian(n: Int): String {

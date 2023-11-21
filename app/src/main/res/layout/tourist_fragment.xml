@@ -48,7 +48,7 @@
         android:layout_height="wrap_content" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id = "@+id/cotainer_button"
+        android:id = "@+id/container_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corners_12dp">
