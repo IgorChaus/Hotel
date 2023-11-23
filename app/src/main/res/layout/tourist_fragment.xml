@@ -48,7 +48,7 @@
         android:layout_height="wrap_content" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id = "@+id/container_button"
+        android:id="@+id/container_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corners_12dp">
@@ -60,11 +60,11 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="13dp"
             android:layout_marginBottom="13dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:text="Добавить туриста"
             android:textColor="@color/black"
             android:textSize="26sp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -50,6 +50,7 @@ class RoomScreen: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.customInfo.etPhone
             .addTextChangedListener(NumberTextWatcher("+7 (***) ***-**-**"))
 
@@ -58,8 +59,8 @@ class RoomScreen: Fragment() {
         viewModel.reservation.observe(viewLifecycleOwner){ reservation ->
             binding.hotelInformation.tvHotelName.text = reservation.hotel_name
             binding.hotelInformation.tvHotelAddress.text = reservation.hotel_adress
-            binding.hotelInformation.tvRating.text = reservation.horating.toString()
-            binding.hotelInformation.tvRatingName.text = reservation.rating_name
+            binding.hotelInformation.rating.tvRating.text = reservation.horating.toString()
+            binding.hotelInformation.rating.tvRatingName.text = reservation.rating_name
 
             binding.tourInformation.departure.text = reservation.departure
             binding.tourInformation.destinition.text = reservation.arrival_country

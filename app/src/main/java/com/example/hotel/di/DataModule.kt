@@ -12,4 +12,5 @@ class DataModule {
     fun providePersonApi(): RetrofitApi {
         return RetrofitInstance.service
     }
+
 }

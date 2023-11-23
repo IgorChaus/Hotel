@@ -14,105 +14,56 @@
         tools:context=".view.HotelScreen">
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:background="@drawable/rounded_bottom_corners">
 
             <TextView
-                android:id="@+id/tv_hotel"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/sf_ui_text_regular"
+                android:gravity="center_horizontal"
                 android:text="Отель"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="18sp" />
 
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/vp_hotel"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="257dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_hotel">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            </androidx.viewpager2.widget.ViewPager2>
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="18dp"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="-30dp"
-                android:background="@drawable/rounded_corners_5dp"
-                app:layout_constraintEnd_toEndOf="@+id/vp_hotel"
-                app:layout_constraintStart_toStartOf="@+id/vp_hotel"
-                app:layout_constraintTop_toBottomOf="@+id/vp_hotel"
-                app:tabBackground="@drawable/tab_selector"
-                app:tabGravity="center"
-                app:tabIndicatorHeight="0dp"
-                app:tabPaddingEnd="7dp"
-                app:tabPaddingStart="7dp"
-                tools:layout_width="200dp" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/mark_container"
-                android:layout_width="149dp"
-                android:layout_height="29dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="@color/orange_100"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/vp_hotel">
-
-                <LinearLayout
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vp_hotel"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:layout_height="257dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="10dp"
-                        android:src="@drawable/icon_star" />
+                </androidx.viewpager2.widget.ViewPager2>
 
-                    <TextView
-                        android:id="@+id/tv_rating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sf_ui_text_regular"
-                        android:paddingStart="2dp"
-                        android:text="5"
-                        android:textColor="@color/orange_200"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tab_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginTop="-30dp"
+                    android:background="@drawable/rounded_corners_5dp"
+                    app:tabBackground="@drawable/tab_selector"
+                    app:tabGravity="center"
+                    app:tabIndicatorHeight="0dp"
+                    app:tabPaddingEnd="7dp"
+                    app:tabPaddingStart="7dp"
+                    tools:layout_width="200dp" />
 
-                    <TextView
-                        android:id="@+id/tv_rating_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/sf_ui_text_regular"
-                        android:paddingStart="2dp"
-                        tools:text="Превосходно"
-                        android:textColor="@color/orange_200"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+            </LinearLayout>
 
-                </LinearLayout>
-
-
-            </androidx.cardview.widget.CardView>
+            <include
+                android:id="@+id/rating"
+                layout="@layout/rating" />
 
             <TextView
                 android:id="@+id/tv_hotel_name"
@@ -124,9 +75,7 @@
                 tools:text="Steigenberger Makadi"
                 android:textColor="@color/black"
                 android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mark_container" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_hotel_address"
@@ -137,40 +86,35 @@
                 android:fontFamily="@font/sf_ui_text_regular"
                 tools:text="Madinat Makadi, Safaga Road, Makadi Bay, Египет"
                 android:textColor="@color/blue_100"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_hotel_name" />
+                android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/tv_price"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:fontFamily="@font/sf_ui_text_regular"
-                tools:text="от 134 673 ₽"
-                android:textColor="@color/black"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_hotel_address" />
+                android:layout_margin="16dp">
 
-            <TextView
-                android:id="@+id/tv_price_about"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="20dp"
-                android:fontFamily="@font/sf_ui_text_regular"
-                tools:text="за тур с перелетом"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_price" />
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sf_ui_text_regular"
+                    android:textColor="@color/black"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    tools:text="от 134 673 ₽" />
 
+                <TextView
+                    android:id="@+id/tv_price_about"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sf_ui_text_regular"
+                    android:paddingStart="8dp"
+                    android:textSize="16sp"
+                    tools:text="за тур с перелетом" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

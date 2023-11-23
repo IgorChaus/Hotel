@@ -69,8 +69,8 @@ class HotelScreen: Fragment(){
             val hotelPrice = String.format("%,d", hotel.minimal_price).replace(",", " ")
             binding.tvPrice.text = "от $hotelPrice ₽"
             binding.tvPriceAbout.text = hotel.price_for_it
-            binding.tvRating.text = hotel.rating.toString()
-            binding.tvRatingName.text = hotel.rating_name
+            binding.rating.tvRating.text = hotel.rating.toString()
+            binding.rating.tvRatingName.text = hotel.rating_name
             binding.tvDescriptionHotel.text = hotel.about_the_hotel.description
 
             setPeculiaritiesLayout(view, hotel.about_the_hotel.peculiarities)
