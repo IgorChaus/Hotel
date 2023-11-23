@@ -1,5 +1,6 @@
-package com.example.hotel
+package com.example.hotel.view
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Patterns
 import android.util.TypedValue
@@ -11,71 +12,87 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.hotel.databinding.MainScreenBinding
-import com.example.hotel.model.Hotel
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ViewModelProvider
+import com.example.hotel.HotelApp
+import com.example.hotel.R
+import com.example.hotel.databinding.HotelScreenBinding
 import com.example.hotel.pageradapter.PagerAdapter
+import com.example.hotel.viewmodel.HotelViewModel
+import com.example.hotel.viewmodel.HotelViewModelFactory
 import com.google.android.material.tabs.TabLayoutMediator
+import javax.inject.Inject
 
-class MainScreen: Fragment(){
-    private var _binding: MainScreenBinding? = null
-    private val binding: MainScreenBinding
-        get() = _binding ?: throw RuntimeException("MainScreenBinding == null")
+class HotelScreen: Fragment(){
+    private var _binding: HotelScreenBinding? = null
+    private val binding: HotelScreenBinding
+        get() = _binding ?: throw RuntimeException("HotelScreenBinding == null")
 
-    private val hotel = Hotel(
-        id = 1,
-        name = "Лучший пятизвездочный отель в Хургаде, Египет",
-        adress = "Madinat Makadi, Safaga Road, Makadi Bay, Египет",
-        minimal_price = 134268,
-        price_for_it =  "За тур с перелётом",
-        rating = 5,
-        rating_name = "Превосходно",
-        image_urls = listOf(
-            "https://www.atorus.ru/sites/default/files/upload/image/News/56149/Club_Priv%C3%A9_by_Belek_Club_House.jpg",
-            "https://deluxe.voyage/useruploads/articles/The_Makadi_Spa_Hotel_02.jpg",
-            "https://deluxe.voyage/useruploads/articles/article_1eb0a64d00.jpg"
-        ),
-        about_the_hotel = Hotel.AboutTheHotel(
-            description = "Отель VIP-класса с собственными гольф полями. Высокий уровнь сервиса." +
-                    "Рекомендуем для респектабельного отдыха. Отель принимает гостей от 18 лет!",
-            peculiarities = listOf(
-                "Бесплатный Wifi на всей территории отеля",
-                "1 км до пляжа",
-                "Бесплатный фитнес-клуб",
-                "20 км до аэропорта"
-            )
-        )
-    )
+    val component by lazy{
+        (requireActivity().application as HotelApp).component
+    }
+
+    private var hotelName = ""
+
+    @Inject
+    lateinit var factory: HotelViewModelFactory
+
+    private val viewModel by lazy {
+        ViewModelProvider(requireActivity(), factory)[HotelViewModel::class.java]
+    }
+
+    override fun onAttach(context: Context) {
+        component.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?): View {
 
-        _binding = MainScreenBinding.inflate(inflater, container, false)
+        _binding = HotelScreenBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = PagerAdapter(hotel.image_urls)
-        binding.vpHotel.adapter = adapter
-        TabLayoutMediator(binding.tabLayout, binding.vpHotel) { tab, position ->
-        }.attach()
+        viewModel.hotel.observe(viewLifecycleOwner){ hotel ->
+            hotelName = hotel.name
+            val adapter = PagerAdapter(hotel.image_urls)
+            binding.vpHotel.adapter = adapter
+            TabLayoutMediator(binding.tabLayout, binding.vpHotel) { tab, position ->
+            }.attach()
 
-        binding.tvHotelName.text = hotel.name
-        binding.tvHotelAddress.text = hotel.adress
-        binding.tvPrice.text = "от ${hotel.minimal_price}"
-        binding.tvPriceAbout.text = hotel.price_for_it
-        binding.tvRating.text = hotel.rating.toString()
-        binding.tvRatingName.text = hotel.rating_name
-        binding.tvDescriptionHotel.text = hotel.about_the_hotel.description
+            binding.tvHotelName.text = hotel.name
+            binding.tvHotelAddress.text = hotel.adress
+            val hotelPrice = String.format("%,d", hotel.minimal_price).replace(",", " ")
+            binding.tvPrice.text = "от $hotelPrice ₽"
+            binding.tvPriceAbout.text = hotel.price_for_it
+            binding.tvRating.text = hotel.rating.toString()
+            binding.tvRatingName.text = hotel.rating_name
+            binding.tvDescriptionHotel.text = hotel.about_the_hotel.description
 
-        setPeculiaritiesLayout(view)
+            setPeculiaritiesLayout(view, hotel.about_the_hotel.peculiarities)
+        }
 
+        binding.btBottom.setOnClickListener {
+            launchRoomListScreen()
+        }
+
+        requireActivity().supportFragmentManager
+            .popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 
     }
 
-    private fun setPeculiaritiesLayout(view: View) {
+    private fun launchRoomListScreen(){
+        requireActivity().supportFragmentManager.beginTransaction()
+            .add(R.id.container_activity, RoomListScreen.getInstance(hotelName))
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun setPeculiaritiesLayout(view: View, peculiarities: List<String>) {
         val layoutPeculiarities: LinearLayout = view.findViewById(R.id.layout_peculiarities)
 
         layoutPeculiarities.viewTreeObserver.addOnGlobalLayoutListener(object :
@@ -90,7 +107,7 @@ class MainScreen: Fragment(){
                 currentRowLayout.orientation = LinearLayout.HORIZONTAL
                 layoutPeculiarities.addView(currentRowLayout)
 
-                for (peculiarity in hotel.about_the_hotel.peculiarities) {
+                for (peculiarity in peculiarities) {
                     val peculiarityTextView = TextView(requireContext())
                     peculiarityTextView.text = peculiarity
                     val backgroundText = ContextCompat.getDrawable(
@@ -143,6 +160,10 @@ class MainScreen: Fragment(){
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object{
+        fun getInstance() = HotelScreen()
     }
 
 }

@@ -11,40 +11,17 @@
         android:background="@color/grey_200"
         android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white">
+        <include
+            android:id="@+id/header_screen"
+            layout="@layout/header_screen"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
-                android:layout_marginBottom="11dp"
-                android:fontFamily="@font/sf_ui_text_regular"
-                android:text="Бронирование"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <include
+            android:id="@+id/hotel_information"
+            layout="@layout/hotel_information" />
 
-            <ImageView
-                android:id="@+id/buck_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/arrow_left" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <include layout="@layout/hotel_information" />
-
-        <include layout="@layout/tour_information" />
+        <include
+            android:id="@+id/tour_information"
+            layout="@layout/tour_information" />
 
         <include
             android:id="@+id/custom_info"
@@ -57,7 +34,31 @@
 
         <include
             android:id="@+id/total_price"
-            layout="@layout/total_price"/>
+            layout="@layout/total_price" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/white">
+
+            <Button
+                android:id="@+id/button_super"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/round_corners_button"
+                android:fontFamily="@font/sf_ui_text_regular"
+                android:text="Оплатить 198 036 ₽"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
 
     </LinearLayout>
 </ScrollView>

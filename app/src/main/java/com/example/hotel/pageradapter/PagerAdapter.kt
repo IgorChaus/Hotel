@@ -15,7 +15,6 @@ class PagerAdapter(private val images: List<String>) : RecyclerView.Adapter<Imag
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
         val imageUrl = images[position]
-        Log.i("MyTag", "imageUrl $imageUrl")
         Glide.with(holder.itemView.context).load(imageUrl).into(holder.imageView)
     }
 

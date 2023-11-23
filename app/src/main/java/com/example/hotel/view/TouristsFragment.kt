@@ -1,12 +1,11 @@
-package com.example.hotel
+package com.example.hotel.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ScrollView
 import androidx.fragment.app.Fragment
+import com.example.hotel.R
 import com.example.hotel.databinding.TouristFragmentBinding
 
 class TouristsFragment: Fragment() {
@@ -15,10 +14,8 @@ class TouristsFragment: Fragment() {
     private val binding: TouristFragmentBinding
         get() = _binding ?: throw RuntimeException("TouristFragmentBinding == null")
 
-    private val touristsInfoFragment = TouristsInfo.getInstance()
-
-    var scrollListener: (() -> Unit)? = null
-
+    private val touristsInfoFragment = TouristsInfoFragment.getInstance()
+    var isTouristsShowed = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,17 +28,17 @@ class TouristsFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.i("MyTag", "TouristsFragment onViewCreated")
 
         if (savedInstanceState != null) {
             val buttonVisibility = savedInstanceState.getInt("buttonVisibility")
             binding.containerButton.visibility = buttonVisibility
+            val touristsShowed = savedInstanceState.getBoolean("isTouristsShowed")
+            isTouristsShowed = touristsShowed
         }
 
         val touristsNumber = requireArguments().getInt(KEY_TOURISTS_NUMBER, 1)
         binding.tvTouristNumber.text = "${numberToOrdinalRussian(touristsNumber)} турист"
 
-        var isTouristsShowed = true
         childFragmentManager.beginTransaction()
             .add(R.id.container_tourists_info, touristsInfoFragment)
             .commit()
@@ -62,11 +59,9 @@ class TouristsFragment: Fragment() {
         }
         binding.ibAddTourist.setOnClickListener {
             childFragmentManager.beginTransaction()
-                .add(R.id.container_tourists_add, TouristsFragment.getInstance(touristsNumber + 1))
+                .add(R.id.container_tourists_add, getInstance(touristsNumber + 1))
                 .commit()
             binding.containerButton.visibility = View.GONE
-            Log.i("MyTag","scrollListener $scrollListener")
-            scrollListener?.invoke()
         }
 
     }
@@ -74,9 +69,10 @@ class TouristsFragment: Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("buttonVisibility", binding.containerButton.visibility)
+        outState.putBoolean("isTouristsShowed", isTouristsShowed)
     }
 
-    fun numberToOrdinalRussian(n: Int): String {
+    private fun numberToOrdinalRussian(n: Int): String {
         val numbers = listOf("Первый", "Второй", "Третий", "Четвертый", "Пятый", "Шестой", "Седьмой",
             "Восьмой", "Девятый", "Десятый")
         return numbers[n-1]

@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.example.hotel.R
 import com.example.hotel.model.Room
 import com.example.hotel.databinding.ItemRoomBinding
@@ -16,7 +17,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class RoomListAdapter: ListAdapter<Room, RoomViewHolder>(ItemDiffCallBack) {
 
- //   var itemClickListener: ((PlayerAdapterItem) -> Unit)? = null
+    var itemClickListener: ((Room) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = RoomViewHolder(
         ItemRoomBinding.inflate(
@@ -29,8 +30,17 @@ class RoomListAdapter: ListAdapter<Room, RoomViewHolder>(ItemDiffCallBack) {
         val room = getItem(position)
         with(holder.binding) {
             roomName.text = room.name
-            roomPrice.text = room.price.toString()
+            val price = String.format("%,d", room.price).replace(",", " ") + " ₽"
+            roomPrice.text = price
             pricePer.text = room.price_per
+
+            btChooseRoom.setOnClickListener {
+                if (holder.getAdapterPosition() == RecyclerView.NO_POSITION) {
+                    return@setOnClickListener
+                }
+                itemClickListener?.invoke(room)
+            }
+
         }
 
         val adapter = PagerAdapter(room.image_urls)

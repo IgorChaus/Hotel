@@ -40,7 +40,7 @@
         android:id="@+id/container_tourists_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:name="com.example.hotel.TouristsInfo"/>
+        tools:name="com.example.hotel.view.TouristsInfoFragment"/>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/container_tourists_add"
