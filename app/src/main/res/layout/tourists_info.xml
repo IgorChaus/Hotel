@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="Имя"
+            android:hint="@string/name"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:paddingStart="16dp" />
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="Фамилия"
+            android:hint="@string/last_name"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:paddingStart="16dp" />
@@ -67,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="Дата рождения"
+            android:hint="@string/birthday"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:paddingStart="16dp" />
@@ -90,7 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="Гражданство"
+            android:hint="@string/citizenship"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:paddingStart="16dp" />
@@ -113,7 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="Номер загранпаспорта"
+            android:hint="@string/passport_number"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:paddingStart="16dp" />
@@ -136,7 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="Срок действия загранпаспорта"
+            android:hint="@string/validity_passport"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:paddingStart="16dp" />

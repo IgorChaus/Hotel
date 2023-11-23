@@ -4,15 +4,14 @@ import com.example.hotel.model.Hotel
 import com.example.hotel.model.Reservation
 import com.example.hotel.model.Rooms
 import com.example.hotel.network.RetrofitApi
+import com.example.hotel.wrappers.Response
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
-import com.example.hotel.network.RetrofitInstance
-import com.example.hotel.wrappers.Response
 import java.io.IOException
 import javax.inject.Inject
 
-class NetworkRepository @Inject constructor(val service: RetrofitApi) {
+class NetworkRepository @Inject constructor(private val service: RetrofitApi) {
 
     suspend fun getHotel(): Response<Hotel> {
         return withContext(Dispatchers.IO) {

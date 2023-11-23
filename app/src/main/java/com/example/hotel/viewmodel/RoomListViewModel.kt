@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.hotel.model.Hotel
 import com.example.hotel.model.Room
 import com.example.hotel.source.NetworkRepository
 import com.example.hotel.wrappers.Response
@@ -24,8 +23,7 @@ class RoomListViewModel @Inject constructor(
         getRooms()
     }
 
-    fun getRooms(){
-
+    private fun getRooms(){
         viewModelScope.launch {
             val response = repository.getRooms()
             when (response) {

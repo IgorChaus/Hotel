@@ -1,5 +1,6 @@
 package com.example.hotel.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +16,7 @@ class TouristsFragment: Fragment() {
         get() = _binding ?: throw RuntimeException("TouristFragmentBinding == null")
 
     private val touristsInfoFragment = TouristsInfoFragment.getInstance()
-    var isTouristsShowed = true
+    private var isTouristsShowed = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,6 +27,7 @@ class TouristsFragment: Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -37,7 +39,8 @@ class TouristsFragment: Fragment() {
         }
 
         val touristsNumber = requireArguments().getInt(KEY_TOURISTS_NUMBER, 1)
-        binding.tvTouristNumber.text = "${numberToOrdinalRussian(touristsNumber)} турист"
+        binding.tvTouristNumber.text = "${numberToOrdinalRussian(touristsNumber)} " +
+                getString(R.string.tourist)
 
         childFragmentManager.beginTransaction()
             .add(R.id.container_tourists_info, touristsInfoFragment)
@@ -73,8 +76,18 @@ class TouristsFragment: Fragment() {
     }
 
     private fun numberToOrdinalRussian(n: Int): String {
-        val numbers = listOf("Первый", "Второй", "Третий", "Четвертый", "Пятый", "Шестой", "Седьмой",
-            "Восьмой", "Девятый", "Десятый")
+        val numbers = listOf(
+            getString(R.string.first),
+            getString(R.string.second),
+            getString(R.string.third),
+            getString(R.string.fourth),
+            getString(R.string.fifth),
+            getString(R.string.sixth),
+            getString(R.string.seventh),
+            getString(R.string.eighth),
+            getString(R.string.ninth),
+            getString(R.string.tenth)
+        )
         return numbers[n-1]
     }
 

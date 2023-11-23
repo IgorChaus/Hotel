@@ -24,8 +24,7 @@ class HotelViewModel @Inject constructor(
         getHotel()
     }
 
-    fun getHotel(){
-
+    private fun getHotel(){
         viewModelScope.launch {
             val response = repository.getHotel()
             when (response) {

@@ -27,7 +27,7 @@ class FinishScreen: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.headerScreen.tvHeader.text = "Заказ оплачен"
+        binding.headerScreen.tvHeader.text = getString(R.string.order_payed)
         binding.headerScreen.backButton.setOnClickListener{
             requireActivity().supportFragmentManager.popBackStack()
         }

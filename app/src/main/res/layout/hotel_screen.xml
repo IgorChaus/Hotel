@@ -6,13 +6,11 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/grey_200"
         android:orientation="vertical"
         tools:context=".view.HotelScreen">
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,7 +25,7 @@
                 android:layout_marginBottom="16dp"
                 android:fontFamily="@font/sf_ui_text_regular"
                 android:gravity="center_horizontal"
-                android:text="Отель"
+                android:text="@string/hotel"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -129,7 +127,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/sf_ui_text_regular"
-                android:text="Об отеле"
+                android:text="@string/about_hotel"
                 android:textColor="@color/black"
                 android:textSize="22sp"
                 android:textStyle="bold"
@@ -202,7 +200,7 @@
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/round_corners_button"
                 android:fontFamily="@font/sf_ui_text_regular"
-                android:text="К выбору номера"
+                android:text="@string/to_select_room"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp"

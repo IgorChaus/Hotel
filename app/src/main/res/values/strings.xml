@@ -1,5 +1,54 @@
 <resources>
     <string name="app_name">Hotel</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="facilities">Удобства</string>
+    <string name="essentials">Самое необходимое</string>
+    <string name="what_included">Что включено</string>
+    <string name="what_no_included">Что не включено</string>
+    <string name="custom_info">Информация о покупателе</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="email">Почта</string>
+    <string name="information">Эти данные никому не передаются. После оплаты мы вышли чек на указанный вами номер и почту</string>
+    <string name="your_order_in_work">Ваш заказ принят в работу</string>
+    <string name="info_about_confirmation">Подтверждение заказа №104893 может занять некоторое время (от 1 часа до суток). Как только мы получим ответ от туроператора, вам на почту придет уведомление.</string>
+    <string name="message_super">Супер!</string>
+    <string name="hotel">Отель</string>
+    <string name="about_hotel">Об отеле</string>
+    <string name="to_select_room">К выбору номера</string>
+    <string name="more_about_room">Подробнее о номере</string>
+    <string name="select_room">Выбрать номер</string>
+    <string name="tour">Тур</string>
+    <string name="fuel_charge">Топливный сбор</string>
+    <string name="service_charge">Сервисный сбор</string>
+    <string name="to_pay">К оплате</string>
+    <string name="country">Страна, город</string>
+    <string name="dates">Даты</string>
+    <string name="number_nights">Кол-во ночей</string>
+    <string name="room">Номер</string>
+    <string name="nutrition">Питание</string>
+    <string name="add_tourist">Добавить туриста</string>
+    <string name="name">Имя</string>
+    <string name="last_name">Фамилия</string>
+    <string name="birthday">Дата рождения</string>
+    <string name="citizenship">Гражданство</string>
+    <string name="passport_number">Номер загранпаспорта</string>
+    <string name="validity_passport">Срок действия загранпаспорта</string>
+    <string name="rub">" ₽"</string>
+    <string name="order_payed">Заказ оплачен</string>
+    <string name="from">от</string>
+    <string name="pay">Оплатить</string>
+    <string name="reservation">Бронирование</string>
+    <string name="tourist">турист</string>
+
+    <string name="first">Первый</string>
+    <string name="second">Второй</string>
+    <string name="third">Третий</string>
+    <string name="fourth">Четвертый</string>
+    <string name="fifth">Пятый</string>
+    <string name="sixth">Шестой</string>
+    <string name="seventh">Седьмой</string>
+    <string name="eighth">Восьмой</string>
+    <string name="ninth">Девятый</string>
+    <string name="tenth">Десятый</string>
+    <string name="departure_from">Вылет из</string>
 </resources>

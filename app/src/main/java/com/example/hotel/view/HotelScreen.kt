@@ -1,8 +1,8 @@
 package com.example.hotel.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.Patterns
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -28,7 +28,7 @@ class HotelScreen: Fragment(){
     private val binding: HotelScreenBinding
         get() = _binding ?: throw RuntimeException("HotelScreenBinding == null")
 
-    val component by lazy{
+    private val component by lazy{
         (requireActivity().application as HotelApp).component
     }
 
@@ -55,19 +55,22 @@ class HotelScreen: Fragment(){
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.hotel.observe(viewLifecycleOwner){ hotel ->
             hotelName = hotel.name
             val adapter = PagerAdapter(hotel.image_urls)
             binding.vpHotel.adapter = adapter
-            TabLayoutMediator(binding.tabLayout, binding.vpHotel) { tab, position ->
+            TabLayoutMediator(binding.tabLayout, binding.vpHotel) { _, _ ->
             }.attach()
 
             binding.tvHotelName.text = hotel.name
             binding.tvHotelAddress.text = hotel.adress
-            val hotelPrice = String.format("%,d", hotel.minimal_price).replace(",", " ")
-            binding.tvPrice.text = "от $hotelPrice ₽"
+            val hotelPrice = String.format("%,d", hotel.minimal_price)
+                .replace(",", " ")
+            binding.tvPrice.text = getString(R.string.from) +" $hotelPrice" +
+                    getString(R.string.rub)
             binding.tvPriceAbout.text = hotel.price_for_it
             binding.rating.tvRating.text = hotel.rating.toString()
             binding.rating.tvRatingName.text = hotel.rating_name
@@ -154,8 +157,6 @@ class HotelScreen: Fragment(){
             }
         })
     }
-
-    fun isValidEmail(email: String) = email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
     override fun onDestroyView() {
         super.onDestroyView()

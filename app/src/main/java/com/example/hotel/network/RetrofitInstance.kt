@@ -8,7 +8,7 @@ object RetrofitInstance {
 
     private const val BASE_URL = "https://run.mocky.io/v3/"
 
-    val builder = Retrofit.Builder()
+    private val builder = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

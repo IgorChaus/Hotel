@@ -13,7 +13,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/sf_ui_text_regular"
-        android:text="Информация о покупателе"
+        android:text="@string/custom_info"
         android:textColor="@color/black"
         android:textSize="22sp"
         android:textStyle="bold" />
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:cursorVisible="false"
             android:background="@null"
-            android:hint="Номер телефона"
+            android:hint="@string/phone_number"
             android:inputType="text|textCapWords|phone"
             android:imeOptions="actionDone"
             android:paddingStart="16dp" />
@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="Почта"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:imeOptions="actionDone"
             android:paddingStart="16dp" />
@@ -73,6 +73,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Эти данные никому не передаются. После оплаты мы вышли чек на указанный вами номер и почту" />
+        android:text="@string/information" />
 
 </LinearLayout>

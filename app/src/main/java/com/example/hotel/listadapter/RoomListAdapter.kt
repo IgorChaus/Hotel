@@ -30,12 +30,13 @@ class RoomListAdapter: ListAdapter<Room, RoomViewHolder>(ItemDiffCallBack) {
         val room = getItem(position)
         with(holder.binding) {
             roomName.text = room.name
-            val price = String.format("%,d", room.price).replace(",", " ") + " ₽"
+            val price = String.format("%,d", room.price).replace(",", " ") +
+                    roomName.context.getString(R.string.rub)
             roomPrice.text = price
             pricePer.text = room.price_per
 
             btChooseRoom.setOnClickListener {
-                if (holder.getAdapterPosition() == RecyclerView.NO_POSITION) {
+                if (holder.adapterPosition == RecyclerView.NO_POSITION) {
                     return@setOnClickListener
                 }
                 itemClickListener?.invoke(room)
@@ -52,8 +53,10 @@ class RoomListAdapter: ListAdapter<Room, RoomViewHolder>(ItemDiffCallBack) {
         setPeculiaritiesLayout(layoutPeculiarities, room.peculiarities)
     }
 
-    private fun setPeculiaritiesLayout(layoutPeculiarities: LinearLayout, peculiarities: List<String>) {
-
+    private fun setPeculiaritiesLayout(
+        layoutPeculiarities: LinearLayout,
+        peculiarities: List<String>
+    ) {
         layoutPeculiarities.viewTreeObserver.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -74,7 +77,10 @@ class RoomListAdapter: ListAdapter<Room, RoomViewHolder>(ItemDiffCallBack) {
                         R.drawable.rounded_corners_peculiarity
                     )
                     peculiarityTextView.background = backgroundText
-                    val colorText = ContextCompat.getColor(layoutPeculiarities.context, R.color.grey_600)
+                    val colorText = ContextCompat.getColor(
+                        layoutPeculiarities.context,
+                        R.color.grey_600
+                    )
                     peculiarityTextView.setTextColor(colorText)
                     peculiarityTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16.toFloat())
 

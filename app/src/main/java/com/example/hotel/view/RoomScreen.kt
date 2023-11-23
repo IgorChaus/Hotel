@@ -1,5 +1,6 @@
 package com.example.hotel.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -23,7 +24,7 @@ class RoomScreen: Fragment() {
     private val binding: RoomScreenBinding
         get() = _binding ?: throw RuntimeException("RoomsScreenBinding == null")
 
-    val component by lazy{
+    private val component by lazy{
         (requireActivity().application as HotelApp).component
     }
 
@@ -48,13 +49,14 @@ class RoomScreen: Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.customInfo.etPhone
-            .addTextChangedListener(NumberTextWatcher("+7 (***) ***-**-**"))
+            .addTextChangedListener(NumberTextWatcher(MASK))
 
-        binding.headerScreen.tvHeader.text = "Бронирование"
+        binding.headerScreen.tvHeader.text = getString(R.string.reservation)
 
         viewModel.reservation.observe(viewLifecycleOwner){ reservation ->
             binding.hotelInformation.tvHotelName.text = reservation.hotel_name
@@ -72,19 +74,20 @@ class RoomScreen: Fragment() {
             binding.tourInformation.duration.text = reservation.number_of_nights.toString()
 
             val tourPrice = String.format("%,d", reservation.tour_price)
-                .replace(",", " ") + " ₽"
+                .replace(",", " ") + getString(R.string.rub)
             binding.totalPrice.tvTourPrice.text = tourPrice
             val fuelPrice = String.format("%,d", reservation.fuel_charge)
-                .replace(",", " ") + " ₽"
+                .replace(",", " ") + getString(R.string.rub)
             binding.totalPrice.tvFuelPrice.text = fuelPrice
             val servicePrice = String.format("%,d", reservation.service_charge)
-                .replace(",", " ") + " ₽"
+                .replace(",", " ") + getString(R.string.rub)
             binding.totalPrice.tvServicePrice.text = servicePrice
             val total = reservation.tour_price + reservation
                 .fuel_charge + reservation.service_charge
-            val totalString = String.format("%,d", total).replace(",", " ") + " ₽"
+            val totalString = String.format("%,d", total).replace(",", " ") +
+                    getString(R.string.rub)
             binding.totalPrice.tvTotal.text = totalString
-            binding.buttonSuper.text = "Оплатить $totalString"
+            binding.buttonPay.text = getString(R.string.pay) + " $totalString"
         }
 
         val usualColor = ContextCompat.getDrawable(requireContext(),
@@ -111,9 +114,9 @@ class RoomScreen: Fragment() {
             }
         }
 
-        binding.customInfo.etPhone.setOnFocusChangeListener { viewEditText, hasFocus ->
+        binding.customInfo.etPhone.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-                binding.customInfo.etPhone.setText("+7 (***) ***-**-**")
+                binding.customInfo.etPhone.setText(MASK)
             }
         }
 
@@ -127,8 +130,7 @@ class RoomScreen: Fragment() {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-
-        binding.buttonSuper.setOnClickListener {
+        binding.buttonPay.setOnClickListener {
             launchFinishScreen()
         }
     }
@@ -148,5 +150,6 @@ class RoomScreen: Fragment() {
 
     companion object{
         fun getInstance() = RoomScreen()
+        const val MASK = "+7 (***) ***-**-**"
     }
 }

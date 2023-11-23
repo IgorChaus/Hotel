@@ -1,9 +1,8 @@
 package com.example.hotel
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.hotel.view.HotelScreen
-import com.example.hotel.view.RoomScreen
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,7 +12,6 @@ class MainActivity : AppCompatActivity() {
             launchMainScreen()
         }
     }
-
 
     private fun launchMainScreen(){
         supportFragmentManager.beginTransaction()

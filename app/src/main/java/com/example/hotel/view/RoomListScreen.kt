@@ -30,9 +30,7 @@ class RoomListScreen: Fragment() {
         ViewModelProvider(requireActivity(), factory)[RoomListViewModel::class.java]
     }
 
-    private val hotelName = "Steigenberger Makadi" //Исправить
-
-    val component by lazy{
+    private val component by lazy{
         (requireActivity().application as HotelApp).component
     }
 
