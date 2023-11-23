@@ -61,10 +61,12 @@ class TouristsFragment: Fragment() {
             }
         }
         binding.ibAddTourist.setOnClickListener {
-            childFragmentManager.beginTransaction()
-                .add(R.id.container_tourists_add, getInstance(touristsNumber + 1))
-                .commit()
-            binding.containerButton.visibility = View.GONE
+            if (touristsNumber < 10) {
+                childFragmentManager.beginTransaction()
+                    .add(R.id.container_tourists_add, getInstance(touristsNumber + 1))
+                    .commit()
+                binding.containerButton.visibility = View.GONE
+            }
         }
 
     }
