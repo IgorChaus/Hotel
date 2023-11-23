@@ -83,6 +83,12 @@ class HotelScreen: Fragment(){
             launchRoomListScreen()
         }
 
+        binding.tvHotelAddress.setOnClickListener {  }
+
+        binding.buttonsInfo.buttonComfort.setOnClickListener {  }
+        binding.buttonsInfo.buttonWhatIncluded.setOnClickListener {  }
+        binding.buttonsInfo.buttonWhatNoIncluded.setOnClickListener {  }
+
         requireActivity().supportFragmentManager
             .popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 

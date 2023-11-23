@@ -177,7 +177,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/container_desription">
 
-                <include layout="@layout/block_more_about_hotel" />
+                <include
+                    android:id="@+id/buttons_info"
+                    layout="@layout/buttons_info" />
 
             </FrameLayout>
 

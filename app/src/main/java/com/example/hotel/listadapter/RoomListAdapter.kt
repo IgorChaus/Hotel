@@ -42,6 +42,8 @@ class RoomListAdapter: ListAdapter<Room, RoomViewHolder>(ItemDiffCallBack) {
                 itemClickListener?.invoke(room)
             }
 
+            moreRoomLayout.setOnClickListener {  }
+
         }
 
         val adapter = PagerAdapter(room.image_urls)
