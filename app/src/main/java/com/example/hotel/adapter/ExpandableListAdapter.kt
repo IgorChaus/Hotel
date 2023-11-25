@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
 import com.example.hotel.R
+import com.example.hotel.databinding.GroupHolderBinding
+import com.example.hotel.databinding.InfoTouristHolderBinding
 import com.google.android.material.textfield.TextInputLayout
 
 class ExpandableListAdapter(
@@ -48,24 +50,22 @@ class ExpandableListAdapter(
         parent: ViewGroup?
     ): View {
         val childText = getChild(groupPosition, childPosition) as String
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.info_tourist_holder, null)
-        val textInputLayout: TextInputLayout = view.findViewById(R.id.til_item)
-        textInputLayout.hint = childText
-        val editText: EditText = view.findViewById(R.id.et_item)
-        editText.hint = childText
-        val edText = touristList[Pair(groupPosition, childPosition)]
-        editText.setText(edText)
-        setBackgroundField(editText, textInputLayout)
+        val binding = InfoTouristHolderBinding
+            .inflate(LayoutInflater.from(context), parent, false)
+        binding.tilItem.hint = childText
+        binding.etItem.hint = childText
+        val savedText = touristList[Pair(groupPosition, childPosition)]
+        binding.etItem.setText(savedText)
+        setBackgroundField(binding.etItem, binding.tilItem)
 
-        editText.setOnFocusChangeListener { v, hasFocus ->
+        binding.etItem.setOnFocusChangeListener { v, hasFocus ->
             if(!hasFocus){
-                touristList.put(Pair(groupPosition, childPosition), editText.text.toString())
-                setBackgroundField(editText, textInputLayout)
+                touristList.put(Pair(groupPosition, childPosition), binding.etItem.text.toString())
+                setBackgroundField(binding.etItem, binding.tilItem)
             }
         }
 
-        return view
+        return binding.root
     }
 
     private fun setBackgroundField(
@@ -92,16 +92,18 @@ class ExpandableListAdapter(
     }
 
 
-    override fun getGroupView(groupPosition: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup?): View {
+    override fun getGroupView(
+        groupPosition: Int,
+        isExpanded: Boolean,
+        convertView: View?,
+        parent: ViewGroup?
+    ): View {
         val headerTitle = getGroup(groupPosition) as String
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.group_holder, null)
-        val lblListHeader = view.findViewById<TextView>(R.id.tv_tourist)
-        lblListHeader.text = headerTitle
+        val binding = GroupHolderBinding
+            .inflate(LayoutInflater.from(context), parent, false)
+        binding.tvTourist.text = headerTitle
 
-        val ibIndicator: ImageButton = view.findViewById(R.id.ib_indicator)
-
-        ibIndicator.setOnClickListener {
+        binding.ibIndicator.setOnClickListener {
             val expandableListView = parent as ExpandableListView
             if (expandableListView.isGroupExpanded(groupPosition)) {
                 expandableListView.collapseGroup(groupPosition)
@@ -111,12 +113,12 @@ class ExpandableListAdapter(
         }
 
         if (isExpanded) {
-            ibIndicator.setImageResource(R.drawable.icon_arrow_up)
+            binding.ibIndicator.setImageResource(R.drawable.icon_arrow_up)
         } else {
-            ibIndicator.setImageResource(R.drawable.icon_arrow_down)
+            binding.ibIndicator.setImageResource(R.drawable.icon_arrow_down)
         }
 
-        return view
+        return binding.root
     }
 
     override fun getChildrenCount(groupPosition: Int): Int {
