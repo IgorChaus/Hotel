@@ -142,7 +142,7 @@ class RoomScreen: Fragment() {
 
         binding.touristInfo.expandableListView.setAdapter(expandableListAdapter)
 
-        binding.touristInfo.btAddTourist.setOnClickListener {
+        binding.btAddTourist.setOnClickListener {
             addNewTourist()
         }
 
