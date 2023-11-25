@@ -1,4 +1,4 @@
-package com.example.hotel.listadapter
+package com.example.hotel.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.hotel.model.Room

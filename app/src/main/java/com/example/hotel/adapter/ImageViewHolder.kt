@@ -1,4 +1,4 @@
-package com.example.hotel.pageradapter
+package com.example.hotel.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hotel.databinding.PhotoHotelBinding

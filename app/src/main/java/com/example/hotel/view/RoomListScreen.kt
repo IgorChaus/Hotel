@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.hotel.HotelApp
 import com.example.hotel.R
 import com.example.hotel.databinding.RoomListScreenBinding
-import com.example.hotel.listadapter.RoomListAdapter
+import com.example.hotel.adapter.RoomListAdapter
 import com.example.hotel.model.Room
 import com.example.hotel.viewmodel.RoomListViewModel
 import com.example.hotel.viewmodel.RoomListViewModelFactory

@@ -17,7 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.hotel.HotelApp
 import com.example.hotel.R
 import com.example.hotel.databinding.HotelScreenBinding
-import com.example.hotel.pageradapter.PagerAdapter
+import com.example.hotel.adapter.PagerAdapter
 import com.example.hotel.viewmodel.HotelViewModel
 import com.example.hotel.viewmodel.HotelViewModelFactory
 import com.google.android.material.tabs.TabLayoutMediator

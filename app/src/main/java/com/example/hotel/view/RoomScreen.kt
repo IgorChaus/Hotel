@@ -3,6 +3,7 @@ package com.example.hotel.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.hotel.HotelApp
 import com.example.hotel.R
+import com.example.hotel.adapter.ExpandableListAdapter
 import com.example.hotel.databinding.RoomScreenBinding
 import com.example.hotel.utils.NumberTextWatcher
 import com.example.hotel.viewmodel.RoomViewModel
@@ -35,9 +37,27 @@ class RoomScreen: Fragment() {
         ViewModelProvider(requireActivity(), factory)[RoomViewModel::class.java]
     }
 
+    lateinit var expandableListAdapter: ExpandableListAdapter
+
+    val listTouristGroups = arrayListOf("Первый турист")
+    val touristInfo = listOf(
+        "Имя",
+        "Фамилия",
+        "Дата рождения",
+        "Гражданство",
+        "Номер загранпаспорта",
+        "Срок действия загранпаспорта"
+    )
+    val listTouristsChild = hashMapOf(
+        "Первый турист" to touristInfo,
+    )
+
+
+
     override fun onAttach(context: Context) {
         component.inject(this)
         super.onAttach(context)
+        expandableListAdapter = ExpandableListAdapter(context, listTouristGroups, listTouristsChild)
     }
 
     override fun onCreateView(
@@ -120,10 +140,10 @@ class RoomScreen: Fragment() {
             }
         }
 
-        if(savedInstanceState == null) {
-            childFragmentManager.beginTransaction()
-                .replace(R.id.container_tourists_add, TouristsFragment.getInstance(1))
-                .commit()
+        binding.touristInfo.expandableListView.setAdapter(expandableListAdapter)
+
+        binding.touristInfo.btAddTourist.setOnClickListener {
+            addNewTourist()
         }
 
         binding.headerScreen.backButton.setOnClickListener{
@@ -131,9 +151,58 @@ class RoomScreen: Fragment() {
         }
 
         binding.buttonPay.setOnClickListener {
-            launchFinishScreen()
+            if(!checkEmptyInfo(expandableListAdapter.touristList)){
+                Log.i("MyTag","hhhhhh")
+                expandableListAdapter.isShowError = true
+                expandableListAdapter.notifyDataSetChanged()
+                val expandableListView = binding.touristInfo.expandableListView
+                for (i in 0 until expandableListView.expandableListAdapter.groupCount) {
+                    expandableListView.expandGroup(i)
+                }
+            }else {
+                launchFinishScreen()
+            }
+
         }
     }
+
+    private fun checkEmptyInfo(touristList: MutableMap<Pair<Int, Int>, String>): Boolean {
+        for (i in 0 until  listTouristGroups.size){
+            for (j in 0 .. 5){
+                if(touristList[Pair(i, j)] == null) {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
+    private fun addNewTourist(){
+        val numberTourist = listTouristGroups.size + 1
+        val numberTouristString = numberToOrdinal(numberTourist)
+        listTouristGroups.add(numberTouristString)
+        listTouristsChild[numberTouristString] = touristInfo
+        expandableListAdapter.listTouristGroup = listTouristGroups
+        expandableListAdapter.listTouristChild = listTouristsChild
+        expandableListAdapter.notifyDataSetChanged()
+    }
+
+    private fun numberToOrdinal(n: Int): String {
+        val numbers = listOf(
+            getString(R.string.first),
+            getString(R.string.second),
+            getString(R.string.third),
+            getString(R.string.fourth),
+            getString(R.string.fifth),
+            getString(R.string.sixth),
+            getString(R.string.seventh),
+            getString(R.string.eighth),
+            getString(R.string.ninth),
+            getString(R.string.tenth)
+        )
+        return numbers[n-1]
+    }
+
 
     private fun launchFinishScreen() {
         requireActivity().supportFragmentManager.beginTransaction()

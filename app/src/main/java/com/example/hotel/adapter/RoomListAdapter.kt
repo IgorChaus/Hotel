@@ -1,4 +1,4 @@
-package com.example.hotel.listadapter
+package com.example.hotel.adapter
 
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.hotel.R
 import com.example.hotel.model.Room
 import com.example.hotel.databinding.ItemRoomBinding
-import com.example.hotel.pageradapter.PagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
 class RoomListAdapter: ListAdapter<Room, RoomViewHolder>(ItemDiffCallBack) {

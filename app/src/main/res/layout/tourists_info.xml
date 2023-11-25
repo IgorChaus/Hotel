@@ -3,144 +3,59 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:background="@color/white"
     android:orientation="vertical">
 
-    <com.google.android.material.textfield.TextInputLayout
+    <com.example.hotel.utils.NoScrollExListView
+        android:id="@+id/expandableListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/rounded_corners_contact"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        app:hintTextColor="@color/grey_500">
+        android:clipToPadding="false"
+        android:divider="@android:color/transparent"
+        android:groupIndicator="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:hint="@string/name"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:paddingStart="16dp" />
+    </com.example.hotel.utils.NoScrollExListView>
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/rounded_corners_contact"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        app:hintTextColor="@color/grey_500">
+        android:background="@drawable/rounded_corners_12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expandableListView">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_second_name"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_add_tourist"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:hint="@string/last_name"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:paddingStart="16dp" />
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="13dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:text="@string/add_tourist"
+            android:textColor="@color/black"
+            android:textSize="26sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <ImageButton
+            android:id="@+id/bt_add_tourist"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/round_corners_small_button_dark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icon_plus" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/rounded_corners_contact"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        app:hintTextColor="@color/grey_500">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_birth_day"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:hint="@string/birthday"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:paddingStart="16dp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/rounded_corners_contact"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        app:hintTextColor="@color/grey_500">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_citizenship"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:hint="@string/citizenship"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:paddingStart="16dp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/rounded_corners_contact"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        app:hintTextColor="@color/grey_500">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_passport"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:hint="@string/passport_number"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:paddingStart="16dp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/rounded_corners_contact"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        app:hintTextColor="@color/grey_500">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_validity_passport"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:hint="@string/validity_passport"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:paddingStart="16dp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>
