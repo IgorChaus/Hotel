@@ -18,7 +18,7 @@ class ExpandableListAdapter(
     var listTouristChild: Map<String, List<String>>
 ) : BaseExpandableListAdapter() {
 
-    val touristList: MutableMap<Pair<Int, Int>, String> = mutableMapOf()
+    var touristList: MutableMap<Pair<Int, Int>, String> = mutableMapOf()
     var isShowError = false
 
     override fun getGroup(groupPosition: Int): Any {

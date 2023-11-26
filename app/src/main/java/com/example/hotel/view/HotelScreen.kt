@@ -41,10 +41,12 @@ class HotelScreen: Fragment(){
         ViewModelProvider(requireActivity(), factory)[HotelViewModel::class.java]
     }
 
+
     override fun onAttach(context: Context) {
         component.inject(this)
         super.onAttach(context)
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -96,7 +98,7 @@ class HotelScreen: Fragment(){
 
     private fun launchRoomListScreen(){
         requireActivity().supportFragmentManager.beginTransaction()
-            .add(R.id.container_activity, RoomListScreen.getInstance(hotelName))
+            .replace(R.id.container_activity, RoomListScreen.getInstance(hotelName))
             .addToBackStack(null)
             .commit()
     }

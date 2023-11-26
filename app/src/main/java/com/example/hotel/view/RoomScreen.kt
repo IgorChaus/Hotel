@@ -2,8 +2,8 @@ package com.example.hotel.view
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +18,7 @@ import com.example.hotel.databinding.RoomScreenBinding
 import com.example.hotel.utils.NumberTextWatcher
 import com.example.hotel.viewmodel.RoomViewModel
 import com.example.hotel.viewmodel.RoomViewModelFactory
+import com.example.hotel.wrappers.TouristData
 import javax.inject.Inject
 
 class RoomScreen: Fragment() {
@@ -73,9 +74,6 @@ class RoomScreen: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.customInfo.etPhone
-            .addTextChangedListener(NumberTextWatcher(MASK))
-
         binding.headerScreen.tvHeader.text = getString(R.string.reservation)
 
         viewModel.reservation.observe(viewLifecycleOwner){ reservation ->
@@ -108,6 +106,34 @@ class RoomScreen: Fragment() {
                     getString(R.string.rub)
             binding.totalPrice.tvTotal.text = totalString
             binding.buttonPay.text = getString(R.string.pay) + " $totalString"
+
+        }
+
+
+        if(savedInstanceState != null) {
+            val touristData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                savedInstanceState.getParcelable(KEY_TOURIST_LIST, TouristData::class.java)
+            } else {
+                savedInstanceState.getParcelable(KEY_TOURIST_LIST)
+            }
+            expandableListAdapter.touristList = touristData?.touristList ?: mutableMapOf()
+            val phone = savedInstanceState.getString(KEY_PHONE, MASK)
+            binding.customInfo.etEmail.setText(savedInstanceState.getString(KEY_EMAIL))
+            binding.customInfo.etPhone
+                .addTextChangedListener(NumberTextWatcher(phone))
+            binding.customInfo.etPhone.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    binding.customInfo.etPhone.setText(phone)
+                }
+            }
+        } else {
+            binding.customInfo.etPhone
+                .addTextChangedListener(NumberTextWatcher(MASK))
+            binding.customInfo.etPhone.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    binding.customInfo.etPhone.setText(MASK)
+                }
+            }
         }
 
         val usualColor = ContextCompat.getDrawable(requireContext(),
@@ -134,12 +160,6 @@ class RoomScreen: Fragment() {
             }
         }
 
-        binding.customInfo.etPhone.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                binding.customInfo.etPhone.setText(MASK)
-            }
-        }
-
         binding.touristInfo.expandableListView.setAdapter(expandableListAdapter)
 
         binding.btAddTourist.setOnClickListener {
@@ -152,7 +172,6 @@ class RoomScreen: Fragment() {
 
         binding.buttonPay.setOnClickListener {
             if(!checkEmptyInfo(expandableListAdapter.touristList)){
-                Log.i("MyTag","hhhhhh")
                 expandableListAdapter.isShowError = true
                 expandableListAdapter.notifyDataSetChanged()
                 val expandableListView = binding.touristInfo.expandableListView
@@ -164,6 +183,14 @@ class RoomScreen: Fragment() {
             }
 
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val touristData = TouristData(expandableListAdapter.touristList)
+        outState.putParcelable(KEY_TOURIST_LIST, touristData)
+        outState.putString(KEY_PHONE, binding.customInfo.etPhone.text.toString())
+        outState.putString(KEY_EMAIL, binding.customInfo.etEmail.text.toString())
     }
 
     private fun checkEmptyInfo(touristList: MutableMap<Pair<Int, Int>, String>): Boolean {
@@ -220,5 +247,8 @@ class RoomScreen: Fragment() {
     companion object{
         fun getInstance() = RoomScreen()
         const val MASK = "+7 (***) ***-**-**"
+        const val KEY_PHONE = "Phone"
+        const val KEY_EMAIL = "Email"
+        const val KEY_TOURIST_LIST = "TouristList"
     }
 }

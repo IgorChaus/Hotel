@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.hotel.view.HotelScreen
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -18,4 +19,5 @@ class MainActivity : AppCompatActivity() {
             .add(R.id.container_activity, HotelScreen.getInstance())
             .commit()
     }
+
 }
