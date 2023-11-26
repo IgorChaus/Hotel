@@ -36,6 +36,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
 }
 
 dependencies {
@@ -56,6 +57,8 @@ dependencies {
     implementation 'com.google.dagger:dagger:2.35.1'
     kapt 'com.google.dagger:dagger-compiler:2.35.1'
     kapt "org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0"
+
+    implementation 'com.elveum:element-adapter:0.3.1'
 
 
     testImplementation 'junit:junit:4.13.2'
