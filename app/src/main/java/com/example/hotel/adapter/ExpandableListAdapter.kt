@@ -63,6 +63,7 @@ class ExpandableListAdapter(
             if(!hasFocus){
                 touristList[Pair(groupPosition, childPosition)] = binding.etItem.text.toString()
                 setBackgroundField(binding.etItem, binding.tilItem)
+                hideKeyboard(binding.root)
             }
         }
 
@@ -108,9 +109,10 @@ class ExpandableListAdapter(
             val expandableListView = parent as ExpandableListView
             if (expandableListView.isGroupExpanded(groupPosition)) {
                 expandableListView.collapseGroup(groupPosition)
-                hideKeyboard(binding)
+                hideKeyboard(binding.root)
             } else {
                 expandableListView.expandGroup(groupPosition)
+                hideKeyboard(binding.root)
             }
         }
 
@@ -123,10 +125,10 @@ class ExpandableListAdapter(
         return binding.root
     }
 
-    private fun hideKeyboard(binding: GroupHolderBinding) {
-        val imm = binding.ibIndicator.context.getSystemService(Context.INPUT_METHOD_SERVICE)
+    private fun hideKeyboard(view: View) {
+        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE)
                 as InputMethodManager
-        imm.hideSoftInputFromWindow(binding.ibIndicator.windowToken, 0)
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     override fun getChildrenCount(groupPosition: Int): Int {
