@@ -2,6 +2,7 @@ package com.example.hotel.adapter
 
 import android.view.ViewGroup
 import androidx.collection.SparseArrayCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.adapterdelegate.adapter.ViewType
 import com.example.adapterdelegate.adapter.ViewTypeDelegateAdapter
@@ -12,9 +13,12 @@ class ContentAdapter(itemClickListener: ((Room) -> Unit)? = null)
 
     var items = listOf<ViewType>()
         set(value) {
+            val callBack = DiffCallBack(items, value)
+            val diffResult = DiffUtil.calculateDiff(callBack)
+            diffResult.dispatchUpdatesTo(this)
             field = value
-            notifyDataSetChanged()
         }
+
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
     init {
