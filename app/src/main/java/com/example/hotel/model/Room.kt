@@ -1,7 +1,7 @@
 package com.example.hotel.model
 
-import com.example.adapterdelegate.adapter.ViewType
 import com.example.hotel.adapter.ContentAdapter
+import com.example.hotel.adapter.ViewType
 
 data class Room(
     val id: Int,

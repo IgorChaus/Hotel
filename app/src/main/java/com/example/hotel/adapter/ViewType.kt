@@ -1,4 +1,4 @@
-package com.example.adapterdelegate.adapter
+package com.example.hotel.adapter
 
 interface ViewType {
     fun getViewType(): Int

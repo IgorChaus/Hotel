@@ -1,4 +1,4 @@
-package com.example.adapterdelegate.adapter
+package com.example.hotel.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

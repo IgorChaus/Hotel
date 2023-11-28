@@ -4,8 +4,6 @@ import android.view.ViewGroup
 import androidx.collection.SparseArrayCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.adapterdelegate.adapter.ViewType
-import com.example.adapterdelegate.adapter.ViewTypeDelegateAdapter
 import com.example.hotel.model.Room
 
 class ContentAdapter(itemClickListener: ((Room) -> Unit)? = null)
@@ -39,11 +37,11 @@ class ContentAdapter(itemClickListener: ((Room) -> Unit)? = null)
     }
 
     override fun getItemViewType(position: Int): Int {
-        return this.items.get(position).getViewType()
+        return this.items[position].getViewType()
     }
 
     companion object{
-        val PHOTO = 1
-        val ROOM = 2
+        const val PHOTO = 1
+        const val ROOM = 2
     }
 }

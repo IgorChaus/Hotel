@@ -51,7 +51,7 @@ class RoomListScreen: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ContentAdapter(){
+        val adapter = ContentAdapter{
             showRoom(it)
         }
 

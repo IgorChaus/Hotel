@@ -3,8 +3,6 @@ package com.example.hotel.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.adapterdelegate.adapter.ViewType
-import com.example.adapterdelegate.adapter.ViewTypeDelegateAdapter
 import com.example.hotel.R
 import com.example.hotel.databinding.ItemRoomBinding
 import com.example.hotel.model.Room

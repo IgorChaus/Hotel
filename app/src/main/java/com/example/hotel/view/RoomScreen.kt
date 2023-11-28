@@ -38,10 +38,10 @@ class RoomScreen: Fragment() {
         ViewModelProvider(requireActivity(), factory)[RoomViewModel::class.java]
     }
 
-    lateinit var expandableListAdapter: ExpandableListAdapter
+    private lateinit var expandableListAdapter: ExpandableListAdapter
 
-    val listTouristGroups = arrayListOf("Первый турист")
-    val touristInfo = listOf(
+    private var listTouristGroups = arrayListOf("Первый турист")
+    private val touristInfo = listOf(
         "Имя",
         "Фамилия",
         "Дата рождения",
@@ -49,7 +49,7 @@ class RoomScreen: Fragment() {
         "Номер загранпаспорта",
         "Срок действия загранпаспорта"
     )
-    val listTouristsChild = hashMapOf(
+    private var listTouristsChild = hashMapOf(
         "Первый турист" to touristInfo,
     )
 
@@ -117,6 +117,9 @@ class RoomScreen: Fragment() {
                 savedInstanceState.getParcelable(KEY_TOURIST_LIST)
             }
             expandableListAdapter.touristList = touristData?.touristList ?: mutableMapOf()
+            listTouristGroups = touristData?.listTouristGroups as ArrayList<String>
+            listTouristsChild = touristData.listTouristsChild
+
             val phone = savedInstanceState.getString(KEY_PHONE, MASK)
             binding.customInfo.etEmail.setText(savedInstanceState.getString(KEY_EMAIL))
             binding.customInfo.etPhone
@@ -187,7 +190,11 @@ class RoomScreen: Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        val touristData = TouristData(expandableListAdapter.touristList)
+        val touristData = TouristData(
+            expandableListAdapter.touristList,
+            listTouristGroups,
+            listTouristsChild
+        )
         outState.putParcelable(KEY_TOURIST_LIST, touristData)
         outState.putString(KEY_PHONE, binding.customInfo.etPhone.text.toString())
         outState.putString(KEY_EMAIL, binding.customInfo.etEmail.text.toString())

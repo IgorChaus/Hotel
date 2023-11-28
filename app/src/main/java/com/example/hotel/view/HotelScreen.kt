@@ -9,10 +9,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
-import com.example.adapterdelegate.adapter.ViewType
 import com.example.hotel.HotelApp
 import com.example.hotel.R
 import com.example.hotel.adapter.ContentAdapter
+import com.example.hotel.adapter.ViewType
 import com.example.hotel.databinding.HotelScreenBinding
 import com.example.hotel.utils.setPeculiaritiesLayout
 import com.example.hotel.viewmodel.HotelViewModel

@@ -1,7 +1,6 @@
 package com.example.hotel.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.adapterdelegate.adapter.ViewType
 
 class DiffCallBack(
     private val oldList: List<ViewType>, private val newList: List<ViewType>

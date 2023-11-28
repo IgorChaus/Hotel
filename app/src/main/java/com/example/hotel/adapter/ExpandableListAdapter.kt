@@ -58,9 +58,9 @@ class ExpandableListAdapter(
         binding.etItem.setText(savedText)
         setBackgroundField(binding.etItem, binding.tilItem)
 
-        binding.etItem.setOnFocusChangeListener { v, hasFocus ->
+        binding.etItem.setOnFocusChangeListener { _, hasFocus ->
             if(!hasFocus){
-                touristList.put(Pair(groupPosition, childPosition), binding.etItem.text.toString())
+                touristList[Pair(groupPosition, childPosition)] = binding.etItem.text.toString()
                 setBackgroundField(binding.etItem, binding.tilItem)
             }
         }
