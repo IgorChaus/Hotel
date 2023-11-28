@@ -84,10 +84,8 @@ class ExpandableListAdapter(
             )
             if (editText.text == null || editText.text.isEmpty()) {
                 textInputLayout.background = errorColor
-                editText.background
             } else {
                 textInputLayout.background = usualColor
-                editText.background = usualColor
             }
         }
     }
