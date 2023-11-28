@@ -115,8 +115,10 @@ class RoomScreen: Fragment() {
                 savedInstanceState.getParcelable(KEY_TOURIST_LIST)
             }
             expandableListAdapter.touristList = touristData?.touristList ?: mutableMapOf()
+
             listTouristGroups = touristData?.listTouristGroups as ArrayList<String>
             listTouristsChild = touristData.listTouristsChild
+            setDataExpandableListAdapter()
 
             val phone = savedInstanceState.getString(KEY_PHONE, MASK)
             binding.customInfo.etEmail.setText(savedInstanceState.getString(KEY_EMAIL))
@@ -214,10 +216,14 @@ class RoomScreen: Fragment() {
         val numberTouristString = numberToOrdinal(numberTourist) + " " +getString(R.string.tourist)
         listTouristGroups.add(numberTouristString)
         listTouristsChild[numberTouristString] = touristInfo
+        setDataExpandableListAdapter()
+        binding.touristInfo.expandableListView.expandGroup(numberTourist - 1)
+    }
+
+    private fun setDataExpandableListAdapter() {
         expandableListAdapter.listTouristGroup = listTouristGroups
         expandableListAdapter.listTouristChild = listTouristsChild
         expandableListAdapter.notifyDataSetChanged()
-        binding.touristInfo.expandableListView.expandGroup(numberTourist - 1)
     }
 
     private fun numberToOrdinal(n: Int): String {
