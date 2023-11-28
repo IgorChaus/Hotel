@@ -3,14 +3,9 @@ package com.example.hotel.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
@@ -19,9 +14,10 @@ import com.example.hotel.HotelApp
 import com.example.hotel.R
 import com.example.hotel.adapter.ContentAdapter
 import com.example.hotel.databinding.HotelScreenBinding
-import com.example.hotel.wrappers.WrapperPhoto
+import com.example.hotel.utils.setPeculiaritiesLayout
 import com.example.hotel.viewmodel.HotelViewModel
 import com.example.hotel.viewmodel.HotelViewModelFactory
+import com.example.hotel.wrappers.WrapperPhoto
 import com.google.android.material.tabs.TabLayoutMediator
 import javax.inject.Inject
 
@@ -82,7 +78,10 @@ class HotelScreen: Fragment(){
             binding.rating.tvRatingName.text = hotel.rating_name
             binding.tvDescriptionHotel.text = hotel.about_the_hotel.description
 
-            setPeculiaritiesLayout(view, hotel.about_the_hotel.peculiarities)
+            setPeculiaritiesLayout(
+                binding.layoutPeculiarities,
+                hotel.about_the_hotel.peculiarities
+            )
         }
 
         binding.btBottom.setOnClickListener {
@@ -105,69 +104,6 @@ class HotelScreen: Fragment(){
             .replace(R.id.container_activity, RoomListScreen.getInstance(hotelName))
             .addToBackStack(null)
             .commit()
-    }
-
-    private fun setPeculiaritiesLayout(view: View, peculiarities: List<String>) {
-        val layoutPeculiarities: LinearLayout = view.findViewById(R.id.layout_peculiarities)
-
-        layoutPeculiarities.viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                layoutPeculiarities.viewTreeObserver.removeOnGlobalLayoutListener(this)
-
-                val maxWidth = layoutPeculiarities.width
-
-                var currentLineWidth = 0
-                var currentRowLayout = LinearLayout(requireContext())
-                currentRowLayout.orientation = LinearLayout.HORIZONTAL
-                layoutPeculiarities.addView(currentRowLayout)
-
-                for (peculiarity in peculiarities) {
-                    val peculiarityTextView = TextView(requireContext())
-                    peculiarityTextView.text = peculiarity
-                    val backgroundText = ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.rounded_corners_peculiarity
-                    )
-                    peculiarityTextView.background = backgroundText
-                    val colorText = ContextCompat.getColor(requireContext(), R.color.grey_600)
-                    peculiarityTextView.setTextColor(colorText)
-                    peculiarityTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16.toFloat())
-
-                    val densityDpi = resources.displayMetrics.densityDpi
-                    val leftPaddingDp = densityDpi / 160 * 10
-                    val rightPaddingDp = densityDpi / 160 * 10
-                    val topPaddingDp = densityDpi / 160 * 5
-                    val bottomPaddingDp = densityDpi / 160 * 5
-                    peculiarityTextView.setPadding(
-                        leftPaddingDp,
-                        topPaddingDp,
-                        rightPaddingDp,
-                        bottomPaddingDp
-                    )
-
-                    val layoutParams = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                    )
-
-                    layoutParams.setMargins(8, 8, 8, 8)
-
-                    peculiarityTextView.layoutParams = layoutParams
-                    peculiarityTextView.measure(0, 0)
-
-                    if (currentLineWidth + peculiarityTextView.measuredWidth > maxWidth) {
-                        currentRowLayout = LinearLayout(requireContext())
-                        currentRowLayout.orientation = LinearLayout.HORIZONTAL
-                        layoutPeculiarities.addView(currentRowLayout)
-                        currentLineWidth = 0
-                    }
-
-                    currentRowLayout.addView(peculiarityTextView)
-                    currentLineWidth += peculiarityTextView.measuredWidth
-                }
-            }
-        })
     }
 
     override fun onDestroyView() {
