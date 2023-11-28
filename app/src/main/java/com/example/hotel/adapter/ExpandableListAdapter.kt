@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.content.ContextCompat
 import com.example.hotel.R
@@ -107,6 +108,7 @@ class ExpandableListAdapter(
             val expandableListView = parent as ExpandableListView
             if (expandableListView.isGroupExpanded(groupPosition)) {
                 expandableListView.collapseGroup(groupPosition)
+                hideKeyboard(binding)
             } else {
                 expandableListView.expandGroup(groupPosition)
             }
@@ -119,6 +121,12 @@ class ExpandableListAdapter(
         }
 
         return binding.root
+    }
+
+    private fun hideKeyboard(binding: GroupHolderBinding) {
+        val imm = binding.ibIndicator.context.getSystemService(Context.INPUT_METHOD_SERVICE)
+                as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.ibIndicator.windowToken, 0)
     }
 
     override fun getChildrenCount(groupPosition: Int): Int {

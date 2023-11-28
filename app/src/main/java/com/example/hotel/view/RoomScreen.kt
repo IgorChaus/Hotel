@@ -53,8 +53,6 @@ class RoomScreen: Fragment() {
         "Первый турист" to touristInfo,
     )
 
-
-
     override fun onAttach(context: Context) {
         component.inject(this)
         super.onAttach(context)
@@ -213,12 +211,13 @@ class RoomScreen: Fragment() {
 
     private fun addNewTourist(){
         val numberTourist = listTouristGroups.size + 1
-        val numberTouristString = numberToOrdinal(numberTourist)
+        val numberTouristString = numberToOrdinal(numberTourist) + " " +getString(R.string.tourist)
         listTouristGroups.add(numberTouristString)
         listTouristsChild[numberTouristString] = touristInfo
         expandableListAdapter.listTouristGroup = listTouristGroups
         expandableListAdapter.listTouristChild = listTouristsChild
         expandableListAdapter.notifyDataSetChanged()
+        binding.touristInfo.expandableListView.expandGroup(numberTourist - 1)
     }
 
     private fun numberToOrdinal(n: Int): String {
