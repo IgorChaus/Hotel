@@ -133,7 +133,7 @@ class RoomScreen: Fragment() {
             binding.customInfo.etPhone
                 .addTextChangedListener(NumberTextWatcher(MASK))
             binding.customInfo.etPhone.setOnFocusChangeListener { _, hasFocus ->
-                if (hasFocus) {
+                if (hasFocus && binding.customInfo.etPhone.text!!.isEmpty()) {
                     binding.customInfo.etPhone.setText(MASK)
                 }
             }
