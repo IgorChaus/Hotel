@@ -14,10 +14,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import com.example.adapterdelegate.adapter.ViewType
 import com.example.hotel.HotelApp
 import com.example.hotel.R
+import com.example.hotel.adapter.ContentAdapter
 import com.example.hotel.databinding.HotelScreenBinding
-import com.example.hotel.adapter.PagerAdapter
+import com.example.hotel.wrappers.WrapperPhoto
 import com.example.hotel.viewmodel.HotelViewModel
 import com.example.hotel.viewmodel.HotelViewModelFactory
 import com.google.android.material.tabs.TabLayoutMediator
@@ -62,7 +64,9 @@ class HotelScreen: Fragment(){
         super.onViewCreated(view, savedInstanceState)
         viewModel.hotel.observe(viewLifecycleOwner){ hotel ->
             hotelName = hotel.name
-            val adapter = PagerAdapter(hotel.image_urls)
+            val wrapperPhotos: List<ViewType> = hotel.image_urls.map { WrapperPhoto(it) }
+            val adapter = ContentAdapter()
+            adapter.items = wrapperPhotos
             binding.vpHotel.adapter = adapter
             TabLayoutMediator(binding.tabLayout, binding.vpHotel) { _, _ ->
             }.attach()
