@@ -63,7 +63,6 @@ class ExpandableListAdapter(
             if(!hasFocus){
                 touristList[Pair(groupPosition, childPosition)] = binding.etItem.text.toString()
                 setBackgroundField(binding.etItem, binding.tilItem)
-                hideKeyboard(binding.root)
             }
         }
 
