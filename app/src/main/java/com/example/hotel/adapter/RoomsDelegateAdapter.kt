@@ -1,70 +1,60 @@
 package com.example.hotel.adapter
 
-import android.util.Log
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
 import com.example.adapterdelegate.adapter.ViewType
 import com.example.adapterdelegate.adapter.ViewTypeDelegateAdapter
 import com.example.hotel.R
-import com.example.hotel.wrappers.WrapperPhoto
+import com.example.hotel.databinding.ItemRoomBinding
 import com.example.hotel.model.Room
-import com.example.hotel.utils.inflate
-import com.google.android.material.tabs.TabLayout
+import com.example.hotel.wrappers.WrapperPhoto
 import com.google.android.material.tabs.TabLayoutMediator
 
 class RoomsDelegateAdapter(var itemClickListener: ((Room) -> Unit)?) : ViewTypeDelegateAdapter {
 
-    override fun onCreateViewHolder(parent: ViewGroup) = RoomViewHolder(parent)
+    override fun onCreateViewHolder(parent: ViewGroup) = RoomViewHolder(
+       ItemRoomBinding.inflate(
+            LayoutInflater
+                .from(parent.context), parent, false
+        )
+    )
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
         holder as RoomViewHolder
         holder.bind(item as Room)
     }
 
-    inner class RoomViewHolder(parent: ViewGroup) :
-        RecyclerView.ViewHolder(parent.inflate(R.layout.item_room)) {
-
-        val roomName = itemView.findViewById<TextView>(R.id.room_name)
-        val roomPrice = itemView.findViewById<TextView>(R.id.room_price)
-        val pricePer = itemView.findViewById<TextView>(R.id.price_per)
-        val btChooseRoom = itemView.findViewById<Button>(R.id.bt_choose_room)
-        val moreRoomLayout = itemView.findViewById<LinearLayout>(R.id.more_room_layout)
-        val vpHotel = itemView.findViewById<ViewPager2>(R.id.vp_hotel)
-        val tabLayout = itemView.findViewById<TabLayout>(R.id.tab_layout)
-        val layoutPeculiarities = itemView.findViewById<LinearLayout>(R.id.pecul_layout)
-
+    inner class RoomViewHolder(private val binding: ItemRoomBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(room: Room) {
-            roomName.text = room.name
+            binding.roomName.text = room.name
             val price = String.format("%,d", room.price).replace(",", " ") +
-                    roomName.context.getString(R.string.rub)
-            roomPrice.text = price
-            pricePer.text = room.price_per
+                    binding.roomName.context.getString(R.string.rub)
+            binding.roomPrice.text = price
+            binding.pricePer.text = room.price_per
 
-            btChooseRoom.setOnClickListener {
-                Log.i("MyTag", " itemClickListener $itemClickListener")
+            binding.btChooseRoom.setOnClickListener {
                 itemClickListener?.invoke(room)
             }
 
-            moreRoomLayout.setOnClickListener { }
+            binding.moreRoomLayout.setOnClickListener { }
 
             val wrapperPhotos: List<ViewType> = room.image_urls.map { WrapperPhoto(it) }
             val adapter = ContentAdapter()
             adapter.items = wrapperPhotos
-            vpHotel.adapter = adapter
+            binding.vpHotel.adapter = adapter
 
-            TabLayoutMediator(tabLayout, vpHotel) { _, _ ->
+            TabLayoutMediator(binding.tabLayout, binding.vpHotel) { _, _ ->
             }.attach()
 
-            Log.i("MyTag", "layoutPeculiarities $layoutPeculiarities")
-            setPeculiaritiesLayout(layoutPeculiarities, room.peculiarities)
+            setPeculiaritiesLayout(binding.peculLayout, room.peculiarities)
         }
 
     }

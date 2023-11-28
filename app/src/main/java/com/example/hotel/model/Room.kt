@@ -1,7 +1,7 @@
 package com.example.hotel.model
 
 import com.example.adapterdelegate.adapter.ViewType
-import com.example.hotel.adapter.AdapterConstants
+import com.example.hotel.adapter.ContentAdapter
 
 data class Room(
     val id: Int,
@@ -11,5 +11,5 @@ data class Room(
     val peculiarities: List<String>,
     val image_urls: List<String>
 ): ViewType {
-    override fun getViewType() = AdapterConstants.Room
+    override fun getViewType() = ContentAdapter.ROOM
 }

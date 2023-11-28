@@ -18,8 +18,8 @@ class ContentAdapter(itemClickListener: ((Room) -> Unit)? = null)
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
 
     init {
-        delegateAdapters.put(AdapterConstants.Photo, PagerDelegateAdapter())
-        delegateAdapters.put(AdapterConstants.Room, RoomsDelegateAdapter(itemClickListener))
+        delegateAdapters.put(PHOTO, PagerDelegateAdapter())
+        delegateAdapters.put(ROOM, RoomsDelegateAdapter(itemClickListener))
     }
 
     override fun getItemCount(): Int {
@@ -38,4 +38,8 @@ class ContentAdapter(itemClickListener: ((Room) -> Unit)? = null)
         return this.items.get(position).getViewType()
     }
 
+    companion object{
+        val PHOTO = 1
+        val ROOM = 2
+    }
 }
