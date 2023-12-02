@@ -6,6 +6,4 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 class TouristData(
     val touristList: MutableMap<Pair<Int, Int>, String>,
-    val listTouristGroups: List<String>,
-    val listTouristsChild: HashMap<String, List<String>>
 ) : Parcelable

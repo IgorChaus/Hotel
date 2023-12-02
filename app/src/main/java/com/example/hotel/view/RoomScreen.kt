@@ -40,23 +40,14 @@ class RoomScreen: Fragment() {
 
     private lateinit var expandableListAdapter: ExpandableListAdapter
 
-    private var listTouristGroups = arrayListOf("Первый турист")
-    private val touristInfo = listOf(
-        "Имя",
-        "Фамилия",
-        "Дата рождения",
-        "Гражданство",
-        "Номер загранпаспорта",
-        "Срок действия загранпаспорта"
-    )
-    private var listTouristsChild = hashMapOf(
-        "Первый турист" to touristInfo,
-    )
-
     override fun onAttach(context: Context) {
         component.inject(this)
         super.onAttach(context)
-        expandableListAdapter = ExpandableListAdapter(context, listTouristGroups, listTouristsChild)
+        expandableListAdapter = ExpandableListAdapter(
+            context,
+            viewModel.listTouristGroups,
+            viewModel.listTouristsChild
+        )
     }
 
     override fun onCreateView(
@@ -107,6 +98,11 @@ class RoomScreen: Fragment() {
 
         }
 
+        viewModel.showError.observe(viewLifecycleOwner){
+            if(it) {
+                expandableListAdapter.isShowError = true
+            }
+        }
 
         if(savedInstanceState != null) {
             val touristData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -115,9 +111,6 @@ class RoomScreen: Fragment() {
                 savedInstanceState.getParcelable(KEY_TOURIST_LIST)
             }
             expandableListAdapter.touristList = touristData?.touristList ?: mutableMapOf()
-
-            listTouristGroups = touristData?.listTouristGroups as ArrayList<String>
-            listTouristsChild = touristData.listTouristsChild
             setDataExpandableListAdapter()
 
             val phone = savedInstanceState.getString(KEY_PHONE, MASK)
@@ -166,7 +159,9 @@ class RoomScreen: Fragment() {
         binding.touristInfo.expandableListView.setAdapter(expandableListAdapter)
 
         binding.btAddTourist.setOnClickListener {
-            addNewTourist()
+            viewModel.addNewTourist()
+            setDataExpandableListAdapter()
+            binding.touristInfo.expandableListView.expandGroup(viewModel.listTouristGroups.size)
         }
 
         binding.headerScreen.backButton.setOnClickListener{
@@ -174,8 +169,7 @@ class RoomScreen: Fragment() {
         }
 
         binding.buttonPay.setOnClickListener {
-            if(!checkEmptyInfo(expandableListAdapter.touristList)){
-                expandableListAdapter.isShowError = true
+            if(viewModel.isAnyFieldEmpty(expandableListAdapter.touristList)){
                 expandableListAdapter.notifyDataSetChanged()
                 val expandableListView = binding.touristInfo.expandableListView
                 for (i in 0 until expandableListView.expandableListAdapter.groupCount) {
@@ -191,57 +185,18 @@ class RoomScreen: Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         val touristData = TouristData(
-            expandableListAdapter.touristList,
-            listTouristGroups,
-            listTouristsChild
+            expandableListAdapter.touristList
         )
         outState.putParcelable(KEY_TOURIST_LIST, touristData)
         outState.putString(KEY_PHONE, binding.customInfo.etPhone.text.toString())
         outState.putString(KEY_EMAIL, binding.customInfo.etEmail.text.toString())
     }
 
-    private fun checkEmptyInfo(touristList: MutableMap<Pair<Int, Int>, String>): Boolean {
-        for (i in 0 until  listTouristGroups.size){
-            for (j in 0 .. 5){
-                if(touristList[Pair(i, j)] == null) {
-                    return false
-                }
-            }
-        }
-        return true
-    }
-
-    private fun addNewTourist(){
-        val numberTourist = listTouristGroups.size + 1
-        val numberTouristString = numberToOrdinal(numberTourist) + " " +getString(R.string.tourist)
-        listTouristGroups.add(numberTouristString)
-        listTouristsChild[numberTouristString] = touristInfo
-        setDataExpandableListAdapter()
-        binding.touristInfo.expandableListView.expandGroup(numberTourist - 1)
-    }
-
     private fun setDataExpandableListAdapter() {
-        expandableListAdapter.listTouristGroup = listTouristGroups
-        expandableListAdapter.listTouristChild = listTouristsChild
+        expandableListAdapter.listTouristGroup = viewModel.listTouristGroups
+        expandableListAdapter.listTouristChild = viewModel.listTouristsChild
         expandableListAdapter.notifyDataSetChanged()
     }
-
-    private fun numberToOrdinal(n: Int): String {
-        val numbers = listOf(
-            getString(R.string.first),
-            getString(R.string.second),
-            getString(R.string.third),
-            getString(R.string.fourth),
-            getString(R.string.fifth),
-            getString(R.string.sixth),
-            getString(R.string.seventh),
-            getString(R.string.eighth),
-            getString(R.string.ninth),
-            getString(R.string.tenth)
-        )
-        return numbers[n-1]
-    }
-
 
     private fun launchFinishScreen() {
         requireActivity().supportFragmentManager.beginTransaction()
