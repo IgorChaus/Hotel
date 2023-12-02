@@ -161,7 +161,8 @@ class RoomScreen: Fragment() {
         binding.btAddTourist.setOnClickListener {
             viewModel.addNewTourist()
             setDataExpandableListAdapter()
-            binding.touristInfo.expandableListView.expandGroup(viewModel.listTouristGroups.size)
+            binding.touristInfo.expandableListView
+                .expandGroup(viewModel.listTouristGroups.size - 1)
         }
 
         binding.headerScreen.backButton.setOnClickListener{
