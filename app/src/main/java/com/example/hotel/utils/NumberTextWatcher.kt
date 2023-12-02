@@ -13,9 +13,16 @@ class NumberTextWatcher(mask: String) : TextWatcher {
     override fun afterTextChanged(s: Editable?) {
 
         if (increment == 1){
+            val phone: String
             val digitChar = s.toString()[indexChar].toString()
-            val phone = s.toString().removeRange(indexChar, indexChar + 1)
-                .replaceFirst("*",digitChar)
+
+            if (digitChar.matches(Regex("[0-9]*"))){
+                phone = s.toString().removeRange(indexChar, indexChar + 1)
+                    .replaceFirst("*",digitChar)
+            } else {
+                phone = s.toString().removeRange(indexChar, indexChar + 1)
+            }
+
             oldPhone = phone
             s?.clear()
             s?.append(phone)
