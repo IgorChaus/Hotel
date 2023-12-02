@@ -101,6 +101,7 @@ class RoomScreen: Fragment() {
         viewModel.showError.observe(viewLifecycleOwner){
             if(it) {
                 expandableListAdapter.isShowError = true
+                expandableListAdapter.notifyDataSetChanged()
             }
         }
 
@@ -171,7 +172,6 @@ class RoomScreen: Fragment() {
 
         binding.buttonPay.setOnClickListener {
             if(viewModel.isAnyFieldEmpty(expandableListAdapter.touristList)){
-                expandableListAdapter.notifyDataSetChanged()
                 val expandableListView = binding.touristInfo.expandableListView
                 for (i in 0 until expandableListView.expandableListAdapter.groupCount) {
                     expandableListView.expandGroup(i)
