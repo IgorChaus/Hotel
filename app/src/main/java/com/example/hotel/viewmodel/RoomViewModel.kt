@@ -32,7 +32,7 @@ class RoomViewModel @Inject constructor(
         get() = _showError
 
     var listTouristGroups = arrayListOf("Первый турист")
-    val touristInfo = listOf(
+    private val touristInfo = listOf(
         "Имя",
         "Фамилия",
         "Дата рождения",
