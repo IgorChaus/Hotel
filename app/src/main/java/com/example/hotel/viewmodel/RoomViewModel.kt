@@ -27,7 +27,7 @@ class RoomViewModel @Inject constructor(
     val emailError: LiveData<Boolean>
         get() = _emailError
 
-    private val _showError: MutableLiveData<Boolean> = MutableLiveData()
+    private val _showError: MutableLiveData<Boolean> = MutableLiveData(false)
     val showError: LiveData<Boolean>
         get() = _showError
 
