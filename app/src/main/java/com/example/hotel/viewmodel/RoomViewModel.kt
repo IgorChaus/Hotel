@@ -27,9 +27,9 @@ class RoomViewModel @Inject constructor(
     val emailError: LiveData<Boolean>
         get() = _emailError
 
-    private val _showError: MutableLiveData<Boolean> = MutableLiveData(false)
-    val showError: LiveData<Boolean>
-        get() = _showError
+    private val _showEmptyFields: MutableLiveData<Boolean> = MutableLiveData(false)
+    val showEmptyFields: LiveData<Boolean>
+        get() = _showEmptyFields
 
     var listTouristGroups = arrayListOf("Первый турист")
     private val touristInfo = listOf(
@@ -81,12 +81,12 @@ class RoomViewModel @Inject constructor(
         for (i in 0 until  listTouristGroups.size){
             for (j in 0 .. 5){
                 if(touristList[Pair(i, j)] == null) {
-                    _showError.value = true
+                    _showEmptyFields.value = true
                     return true
                 }
             }
         }
-        _showError.value = false
+        _showEmptyFields.value = false
         return false
     }
 
