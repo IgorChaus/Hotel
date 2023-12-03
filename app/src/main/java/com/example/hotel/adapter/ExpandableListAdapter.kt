@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.content.ContextCompat
@@ -66,6 +67,17 @@ class ExpandableListAdapter(
             }
         }
 
+        binding.etItem.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                touristList[Pair(groupPosition, childPosition)] = binding.etItem.text.toString()
+                setBackgroundField(binding.etItem, binding.tilItem)
+                hideKeyboard(binding.root)
+                true
+            } else {
+                false
+            }
+        }
+
         return binding.root
     }
 
@@ -106,11 +118,10 @@ class ExpandableListAdapter(
             val expandableListView = parent as ExpandableListView
             if (expandableListView.isGroupExpanded(groupPosition)) {
                 expandableListView.collapseGroup(groupPosition)
-                hideKeyboard(binding.root)
             } else {
                 expandableListView.expandGroup(groupPosition)
-                hideKeyboard(binding.root)
             }
+            hideKeyboard(binding.root)
         }
 
         if (isExpanded) {

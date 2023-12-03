@@ -102,6 +102,10 @@ class RoomScreen: Fragment() {
             if(it) {
                 expandableListAdapter.isShowError = true
                 expandableListAdapter.notifyDataSetChanged()
+                val expandableListView = binding.touristInfo.expandableListView
+                for (i in 0 until expandableListView.expandableListAdapter.groupCount) {
+                    expandableListView.expandGroup(i)
+                }
             }
         }
 
@@ -166,21 +170,16 @@ class RoomScreen: Fragment() {
                 .expandGroup(viewModel.listTouristGroups.size - 1)
         }
 
+        binding.buttonPay.setOnClickListener {
+            if(!viewModel.isAnyFieldEmpty(expandableListAdapter.touristList)){
+                launchFinishScreen()
+            }
+        }
+
         binding.headerScreen.backButton.setOnClickListener{
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-        binding.buttonPay.setOnClickListener {
-            if(viewModel.isAnyFieldEmpty(expandableListAdapter.touristList)){
-                val expandableListView = binding.touristInfo.expandableListView
-                for (i in 0 until expandableListView.expandableListAdapter.groupCount) {
-                    expandableListView.expandGroup(i)
-                }
-            }else {
-                launchFinishScreen()
-            }
-
-        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
