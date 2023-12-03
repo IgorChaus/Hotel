@@ -59,6 +59,7 @@ class RoomScreen: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.headerScreen.tvHeader.text = getString(R.string.reservation)
+        setExpandableListView()
         setReservationObserver()
         setShowEmptyFieldsObserver()
 
@@ -91,7 +92,6 @@ class RoomScreen: Fragment() {
         }
 
         setEmailFieldHandlers()
-        setExpandableListView()
         setAddButtonListener()
 
         binding.buttonPay.setOnClickListener {
