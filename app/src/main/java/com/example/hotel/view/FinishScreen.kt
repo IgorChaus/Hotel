@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.hotel.R
 import com.example.hotel.databinding.FinishScreenBinding
 
@@ -32,18 +33,12 @@ class FinishScreen: Fragment() {
             requireActivity().supportFragmentManager.popBackStack()
         }
         binding.btBottom.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .add(R.id.container_activity, HotelScreen.getInstance())
-                .commit()
+            findNavController().popBackStack()
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object{
-        fun getInstance() = FinishScreen()
     }
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.hotel.HotelApp
 import com.example.hotel.R
 import com.example.hotel.adapter.ContentAdapter
@@ -85,7 +86,10 @@ class HotelScreen: Fragment(){
         }
 
         binding.btBottom.setOnClickListener {
-            launchRoomListScreen()
+            findNavController().navigate(
+                HotelScreenDirections.actionHotelScreenToRoomListScreen(hotelName
+                )
+            )
         }
 
         binding.tvHotelAddress.setOnClickListener {  }
@@ -99,20 +103,9 @@ class HotelScreen: Fragment(){
 
     }
 
-    private fun launchRoomListScreen(){
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.container_activity, RoomListScreen.getInstance(hotelName))
-            .addToBackStack(null)
-            .commit()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object{
-        fun getInstance() = HotelScreen()
     }
 
 }
