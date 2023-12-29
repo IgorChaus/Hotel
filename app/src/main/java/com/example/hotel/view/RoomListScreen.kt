@@ -7,8 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.hotel.HotelApp
-import com.example.hotel.R
 import com.example.hotel.adapter.ContentAdapter
 import com.example.hotel.databinding.RoomListScreenBinding
 import com.example.hotel.model.Room
@@ -22,6 +23,8 @@ class RoomListScreen: Fragment() {
     private var _binding: RoomListScreenBinding? = null
     private val binding: RoomListScreenBinding
         get() = _binding ?: throw RuntimeException("RoomsListScreenBinding == null")
+
+    val args by navArgs<RoomListScreenArgs>()
 
     @Inject
     lateinit var factory: RoomListViewModelFactory
@@ -61,11 +64,10 @@ class RoomListScreen: Fragment() {
             adapter.items = rooms
         }
 
-        val hotelName = requireArguments().getString(KEY_HOTEL, "")
-        binding.headerScreen.tvHeader.text = hotelName
+        binding.headerScreen.tvHeader.text = args.hotelName
 
         binding.headerScreen.backButton.setOnClickListener{
-            requireActivity().supportFragmentManager.popBackStack()
+            findNavController().popBackStack()
         }
     }
 
@@ -74,23 +76,8 @@ class RoomListScreen: Fragment() {
         _binding = null
     }
 
-    companion object{
-        fun getInstance(hotelName: String): Fragment{
-            return RoomListScreen().apply {
-                arguments = Bundle().apply {
-                    putString(KEY_HOTEL,hotelName)
-                }
-            }
-        }
-
-        const val KEY_HOTEL = "Hotel name"
-    }
-
     private fun showRoom(room: Room) {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .add(R.id.container_activity, RoomScreen.getInstance())
-            .addToBackStack(null)
-            .commit()
+        findNavController().navigate(RoomListScreenDirections.actionRoomListScreenToRoomScreen())
     }
 
 }

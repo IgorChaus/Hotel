@@ -11,6 +11,7 @@ import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.hotel.HotelApp
 import com.example.hotel.R
 import com.example.hotel.adapter.ExpandableListAdapter
@@ -101,7 +102,7 @@ class RoomScreen: Fragment() {
         }
 
         binding.headerScreen.backButton.setOnClickListener{
-            requireActivity().supportFragmentManager.popBackStack()
+            findNavController().popBackStack()
         }
 
     }
@@ -218,11 +219,7 @@ class RoomScreen: Fragment() {
     }
 
     private fun launchFinishScreen() {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .add(R.id.container_activity, FinishScreen.getInstance())
-            .addToBackStack(null)
-            .commit()
-
+        findNavController().navigate(RoomScreenDirections.actionRoomScreenToFinishScreen())
     }
 
     override fun onDestroyView() {
@@ -231,7 +228,6 @@ class RoomScreen: Fragment() {
     }
 
     companion object{
-        fun getInstance() = RoomScreen()
         const val MASK = "+7 (***) ***-**-**"
         const val KEY_PHONE = "Phone"
         const val KEY_EMAIL = "Email"
