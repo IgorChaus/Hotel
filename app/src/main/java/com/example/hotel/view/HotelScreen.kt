@@ -17,7 +17,7 @@ import com.example.hotel.adapter.ViewType
 import com.example.hotel.databinding.HotelScreenBinding
 import com.example.hotel.utils.setPeculiaritiesLayout
 import com.example.hotel.viewmodel.HotelViewModel
-import com.example.hotel.viewmodel.HotelViewModelFactory
+import com.example.hotel.viewmodel.ViewModelFactory
 import com.example.hotel.wrappers.WrapperPhoto
 import com.google.android.material.tabs.TabLayoutMediator
 import javax.inject.Inject
@@ -34,7 +34,7 @@ class HotelScreen: Fragment(){
     private var hotelName = ""
 
     @Inject
-    lateinit var factory: HotelViewModelFactory
+    lateinit var factory: ViewModelFactory
 
     private val viewModel by lazy {
         ViewModelProvider(requireActivity(), factory)[HotelViewModel::class.java]

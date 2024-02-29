@@ -14,7 +14,7 @@ import com.example.hotel.adapter.ContentAdapter
 import com.example.hotel.databinding.RoomListScreenBinding
 import com.example.hotel.model.Room
 import com.example.hotel.viewmodel.RoomListViewModel
-import com.example.hotel.viewmodel.RoomListViewModelFactory
+import com.example.hotel.viewmodel.ViewModelFactory
 import javax.inject.Inject
 
 
@@ -27,7 +27,7 @@ class RoomListScreen: Fragment() {
     val args by navArgs<RoomListScreenArgs>()
 
     @Inject
-    lateinit var factory: RoomListViewModelFactory
+    lateinit var factory: ViewModelFactory
 
     private val viewModel by lazy {
         ViewModelProvider(requireActivity(), factory)[RoomListViewModel::class.java]

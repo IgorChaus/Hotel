@@ -7,6 +7,7 @@ import com.example.hotel.view.RoomScreen
 import dagger.BindsInstance
 import dagger.Component
 
+@ApplicationScope
 @Component(modules = [DataModule::class])
 interface ApplicationComponent {
 

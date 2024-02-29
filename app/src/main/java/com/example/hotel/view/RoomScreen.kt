@@ -18,7 +18,7 @@ import com.example.hotel.adapter.ExpandableListAdapter
 import com.example.hotel.databinding.RoomScreenBinding
 import com.example.hotel.utils.NumberTextWatcher
 import com.example.hotel.viewmodel.RoomViewModel
-import com.example.hotel.viewmodel.RoomViewModelFactory
+import com.example.hotel.viewmodel.ViewModelFactory
 import com.example.hotel.wrappers.TouristData
 import javax.inject.Inject
 
@@ -33,7 +33,7 @@ class RoomScreen: Fragment() {
     }
 
     @Inject
-    lateinit var factory: RoomViewModelFactory
+    lateinit var factory: ViewModelFactory
 
     private val viewModel by lazy {
         ViewModelProvider(requireActivity(), factory)[RoomViewModel::class.java]
