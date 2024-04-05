@@ -9,16 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.hotel.HotelApp
 import com.example.hotel.R
 import com.example.hotel.adapter.ExpandableListAdapter
+import com.example.hotel.appComponent
 import com.example.hotel.databinding.RoomScreenBinding
 import com.example.hotel.utils.BaseFragment
 import com.example.hotel.utils.NumberTextWatcher
 import com.example.hotel.viewmodel.RoomViewModel
-import com.example.hotel.viewmodel.ViewModelFactory
 import com.example.hotel.wrappers.TouristData
 import javax.inject.Inject
 
@@ -32,22 +32,15 @@ class RoomScreen: BaseFragment<RoomScreenBinding>() {
         return RoomScreenBinding.inflate(inflater, container, attachToRoot)
     }
 
-    private val component by lazy{
-        (requireActivity().application as HotelApp).component
-    }
-
     @Inject
-    lateinit var factory: ViewModelFactory
-
-    private val viewModel by lazy {
-        ViewModelProvider(requireActivity(), factory)[RoomViewModel::class.java]
-    }
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val viewModel: RoomViewModel by viewModels { viewModelFactory }
 
     private lateinit var expandableListAdapter: ExpandableListAdapter
 
     override fun onAttach(context: Context) {
-        component.inject(this)
         super.onAttach(context)
+        context.appComponent.inject(this)
     }
 
     @SuppressLint("SetTextI18n")
