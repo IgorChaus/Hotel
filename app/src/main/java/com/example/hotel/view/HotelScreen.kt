@@ -13,6 +13,7 @@ import com.example.hotel.HotelApp
 import com.example.hotel.R
 import com.example.hotel.adapter.ContentAdapter
 import com.example.hotel.adapter.ViewType
+import com.example.hotel.appComponent
 import com.example.hotel.databinding.HotelScreenBinding
 import com.example.hotel.utils.BaseFragment
 import com.example.hotel.utils.setPeculiaritiesLayout
@@ -23,10 +24,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import javax.inject.Inject
 
 class HotelScreen: BaseFragment<HotelScreenBinding>(){
-
-    private val component by lazy{
-        (requireActivity().application as HotelApp).component
-    }
 
     private var hotelName = ""
 
@@ -39,8 +36,8 @@ class HotelScreen: BaseFragment<HotelScreenBinding>(){
 
 
     override fun onAttach(context: Context) {
-        component.inject(this)
         super.onAttach(context)
+        context.appComponent.inject(this)
     }
 
     override fun inflateBinding(

@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.hotel.HotelApp
 import com.example.hotel.R
 import com.example.hotel.adapter.ExpandableListAdapter
+import com.example.hotel.appComponent
 import com.example.hotel.databinding.RoomScreenBinding
 import com.example.hotel.utils.BaseFragment
 import com.example.hotel.utils.NumberTextWatcher
@@ -32,10 +33,6 @@ class RoomScreen: BaseFragment<RoomScreenBinding>() {
         return RoomScreenBinding.inflate(inflater, container, attachToRoot)
     }
 
-    private val component by lazy{
-        (requireActivity().application as HotelApp).component
-    }
-
     @Inject
     lateinit var factory: ViewModelFactory
 
@@ -46,8 +43,8 @@ class RoomScreen: BaseFragment<RoomScreenBinding>() {
     private lateinit var expandableListAdapter: ExpandableListAdapter
 
     override fun onAttach(context: Context) {
-        component.inject(this)
         super.onAttach(context)
+        context.appComponent.inject(this)
     }
 
     @SuppressLint("SetTextI18n")

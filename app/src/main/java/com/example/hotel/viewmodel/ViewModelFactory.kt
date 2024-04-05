@@ -1,6 +1,7 @@
 package com.example.hotel.viewmodel
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.hotel.di.ApplicationScope
