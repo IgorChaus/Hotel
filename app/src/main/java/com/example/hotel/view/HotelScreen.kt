@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -15,6 +14,7 @@ import com.example.hotel.R
 import com.example.hotel.adapter.ContentAdapter
 import com.example.hotel.adapter.ViewType
 import com.example.hotel.databinding.HotelScreenBinding
+import com.example.hotel.utils.BaseFragment
 import com.example.hotel.utils.setPeculiaritiesLayout
 import com.example.hotel.viewmodel.HotelViewModel
 import com.example.hotel.viewmodel.ViewModelFactory
@@ -22,10 +22,7 @@ import com.example.hotel.wrappers.WrapperPhoto
 import com.google.android.material.tabs.TabLayoutMediator
 import javax.inject.Inject
 
-class HotelScreen: Fragment(){
-    private var _binding: HotelScreenBinding? = null
-    private val binding: HotelScreenBinding
-        get() = _binding ?: throw RuntimeException("HotelScreenBinding == null")
+class HotelScreen: BaseFragment<HotelScreenBinding>(){
 
     private val component by lazy{
         (requireActivity().application as HotelApp).component
@@ -46,14 +43,12 @@ class HotelScreen: Fragment(){
         super.onAttach(context)
     }
 
-
-    override fun onCreateView(
+    override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?): View {
-
-        _binding = HotelScreenBinding.inflate(inflater, container, false)
-        return binding.root
+        attachToRoot: Boolean
+    ): HotelScreenBinding {
+        return HotelScreenBinding.inflate(inflater, container, attachToRoot)
     }
 
     @SuppressLint("SetTextI18n")
@@ -101,11 +96,6 @@ class HotelScreen: Fragment(){
         requireActivity().supportFragmentManager
             .popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
 }

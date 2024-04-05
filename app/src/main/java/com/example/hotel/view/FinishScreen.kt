@@ -4,27 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.hotel.R
 import com.example.hotel.databinding.FinishScreenBinding
+import com.example.hotel.utils.BaseFragment
 
 
-class FinishScreen: Fragment() {
+class FinishScreen: BaseFragment<FinishScreenBinding>() {
 
-    private var _binding: FinishScreenBinding? = null
-    private val binding: FinishScreenBinding
-        get() = _binding ?: throw RuntimeException("FinishScreenBinding == null")
-
-
-    override fun onCreateView(
+    override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?): View {
-
-        _binding = FinishScreenBinding.inflate(inflater, container, false)
-        return binding.root
+        attachToRoot: Boolean
+    ): FinishScreenBinding {
+        return FinishScreenBinding.inflate(inflater, container, attachToRoot)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,8 +32,4 @@ class FinishScreen: Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }
