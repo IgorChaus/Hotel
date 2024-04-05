@@ -1,9 +1,9 @@
 package com.example.hotel.di
 
 import androidx.lifecycle.ViewModel
-import com.example.hotel.viewmodel.HotelViewModel
-import com.example.hotel.viewmodel.RoomListViewModel
-import com.example.hotel.viewmodel.RoomViewModel
+import com.example.hotel.presentation.viewmodels.HotelViewModel
+import com.example.hotel.presentation.viewmodels.RoomListViewModel
+import com.example.hotel.presentation.viewmodels.RoomViewModel
 import com.ripotu.controlreality.di.ViewModelKey
 import dagger.Binds
 import dagger.Module

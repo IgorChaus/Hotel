@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/hotelScreen"
-        android:name="com.example.hotel.view.HotelScreen"
+        android:name="com.example.hotel.presentation.views.HotelScreen"
         android:label="HotelScreen"
         tools:layout="@layout/hotel_screen">
         <action
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/roomListScreen"
-        android:name="com.example.hotel.view.RoomListScreen"
+        android:name="com.example.hotel.presentation.views.RoomListScreen"
         android:label="RoomListScreen"
         tools:layout="@layout/room_list_screen">
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/roomScreen"
-        android:name="com.example.hotel.view.RoomScreen"
+        android:name="com.example.hotel.presentation.views.RoomScreen"
         android:label="RoomScreen"
         tools:layout="@layout/room_screen">
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/finishScreen"
-        android:name="com.example.hotel.view.FinishScreen"
+        android:name="com.example.hotel.presentation.views.FinishScreen"
         android:label="FinishScreen"
         tools:layout="@layout/finish_screen"/>
 </navigation>

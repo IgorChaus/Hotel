@@ -2,9 +2,9 @@ package com.example.hotel.di
 
 import android.app.Application
 import com.example.hotel.HotelApp
-import com.example.hotel.view.HotelScreen
-import com.example.hotel.view.RoomListScreen
-import com.example.hotel.view.RoomScreen
+import com.example.hotel.presentation.views.HotelScreen
+import com.example.hotel.presentation.views.RoomListScreen
+import com.example.hotel.presentation.views.RoomScreen
 import com.ripotu.controlreality.di.ViewModelBuilderModule
 import dagger.BindsInstance
 import dagger.Component

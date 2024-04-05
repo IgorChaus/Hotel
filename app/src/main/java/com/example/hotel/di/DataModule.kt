@@ -1,7 +1,9 @@
 package com.example.hotel.di
 
-import com.example.hotel.network.RetrofitApi
-import com.example.hotel.network.RetrofitInstance
+import com.example.hotel.data.repository.NetworkRepositoryImpl
+import com.example.hotel.domain.repositories.NetworkRepository
+import com.example.hotel.data.remote.RetrofitApi
+import com.example.hotel.data.remote.RetrofitInstance
 import dagger.Module
 import dagger.Provides
 
@@ -13,6 +15,9 @@ class DataModule {
         return RetrofitInstance.service
     }
 
-
+    @Provides
+    fun provideNetworkRepository(service: RetrofitApi): NetworkRepository{
+        return NetworkRepositoryImpl(service)
+    }
 
 }
