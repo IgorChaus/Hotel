@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -13,16 +12,21 @@ import com.example.hotel.HotelApp
 import com.example.hotel.adapter.ContentAdapter
 import com.example.hotel.databinding.RoomListScreenBinding
 import com.example.hotel.model.Room
+import com.example.hotel.utils.BaseFragment
 import com.example.hotel.viewmodel.RoomListViewModel
 import com.example.hotel.viewmodel.ViewModelFactory
 import javax.inject.Inject
 
 
-class RoomListScreen: Fragment() {
+class RoomListScreen: BaseFragment<RoomListScreenBinding>() {
 
-    private var _binding: RoomListScreenBinding? = null
-    private val binding: RoomListScreenBinding
-        get() = _binding ?: throw RuntimeException("RoomsListScreenBinding == null")
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        attachToRoot: Boolean
+    ): RoomListScreenBinding {
+        return RoomListScreenBinding.inflate(inflater, container, attachToRoot)
+    }
 
     val args by navArgs<RoomListScreenArgs>()
 
@@ -40,15 +44,6 @@ class RoomListScreen: Fragment() {
     override fun onAttach(context: Context) {
         component.inject(this)
         super.onAttach(context)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?): View {
-
-        _binding = RoomListScreenBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,11 +64,6 @@ class RoomListScreen: Fragment() {
         binding.headerScreen.backButton.setOnClickListener{
             findNavController().popBackStack()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun showRoom(room: Room) {

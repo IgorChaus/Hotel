@@ -9,24 +9,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.hotel.HotelApp
 import com.example.hotel.R
 import com.example.hotel.adapter.ExpandableListAdapter
 import com.example.hotel.databinding.RoomScreenBinding
+import com.example.hotel.utils.BaseFragment
 import com.example.hotel.utils.NumberTextWatcher
 import com.example.hotel.viewmodel.RoomViewModel
 import com.example.hotel.viewmodel.ViewModelFactory
 import com.example.hotel.wrappers.TouristData
 import javax.inject.Inject
 
-class RoomScreen: Fragment() {
+class RoomScreen: BaseFragment<RoomScreenBinding>() {
 
-    private var _binding: RoomScreenBinding? = null
-    private val binding: RoomScreenBinding
-        get() = _binding ?: throw RuntimeException("RoomsScreenBinding == null")
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        attachToRoot: Boolean
+    ): RoomScreenBinding {
+        return RoomScreenBinding.inflate(inflater, container, attachToRoot)
+    }
 
     private val component by lazy{
         (requireActivity().application as HotelApp).component
@@ -44,15 +48,6 @@ class RoomScreen: Fragment() {
     override fun onAttach(context: Context) {
         component.inject(this)
         super.onAttach(context)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?): View {
-
-        _binding = RoomScreenBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     @SuppressLint("SetTextI18n")
@@ -220,11 +215,6 @@ class RoomScreen: Fragment() {
 
     private fun launchFinishScreen() {
         findNavController().navigate(RoomScreenDirections.actionRoomScreenToFinishScreen())
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     companion object{
