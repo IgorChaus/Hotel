@@ -7,9 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.hotel.HotelApp
 import com.example.hotel.R
 import com.example.hotel.adapter.ContentAdapter
 import com.example.hotel.adapter.ViewType
@@ -18,7 +18,6 @@ import com.example.hotel.databinding.HotelScreenBinding
 import com.example.hotel.utils.BaseFragment
 import com.example.hotel.utils.setPeculiaritiesLayout
 import com.example.hotel.viewmodel.HotelViewModel
-import com.example.hotel.viewmodel.ViewModelFactory
 import com.example.hotel.wrappers.WrapperPhoto
 import com.google.android.material.tabs.TabLayoutMediator
 import javax.inject.Inject
@@ -28,11 +27,8 @@ class HotelScreen: BaseFragment<HotelScreenBinding>(){
     private var hotelName = ""
 
     @Inject
-    lateinit var factory: ViewModelFactory
-
-    private val viewModel by lazy {
-        ViewModelProvider(requireActivity(), factory)[HotelViewModel::class.java]
-    }
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val viewModel: HotelViewModel by viewModels { viewModelFactory }
 
 
     override fun onAttach(context: Context) {

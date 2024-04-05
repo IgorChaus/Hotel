@@ -5,17 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.hotel.HotelApp
 import com.example.hotel.adapter.ContentAdapter
 import com.example.hotel.appComponent
 import com.example.hotel.databinding.RoomListScreenBinding
 import com.example.hotel.model.Room
 import com.example.hotel.utils.BaseFragment
 import com.example.hotel.viewmodel.RoomListViewModel
-import com.example.hotel.viewmodel.ViewModelFactory
 import javax.inject.Inject
 
 
@@ -32,11 +31,8 @@ class RoomListScreen: BaseFragment<RoomListScreenBinding>() {
     val args by navArgs<RoomListScreenArgs>()
 
     @Inject
-    lateinit var factory: ViewModelFactory
-
-    private val viewModel by lazy {
-        ViewModelProvider(requireActivity(), factory)[RoomListViewModel::class.java]
-    }
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val viewModel: RoomListViewModel by viewModels { viewModelFactory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
