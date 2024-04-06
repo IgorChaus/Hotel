@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.HotelScreen">
+    tools:context=".presentation.views.HotelScreen">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/grey_200"
         android:orientation="vertical"
-        tools:context=".view.HotelScreen">
+        tools:context=".presentation.views.HotelScreen">
 
         <LinearLayout
             android:layout_width="match_parent"

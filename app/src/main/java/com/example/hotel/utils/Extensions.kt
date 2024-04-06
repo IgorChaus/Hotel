@@ -6,6 +6,14 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.example.hotel.R
+import com.example.hotel.data.models.HotelDTO
+import com.example.hotel.data.models.ReservationDTO
+import com.example.hotel.data.models.RoomDTO
+import com.example.hotel.data.models.RoomsDTO
+import com.example.hotel.domain.models.Hotel
+import com.example.hotel.domain.models.Reservation
+import com.example.hotel.domain.models.Room
+import com.example.hotel.domain.models.Rooms
 
 
 fun setPeculiaritiesLayout(view: LinearLayout, peculiarities: List<String>) {
@@ -68,4 +76,57 @@ fun setPeculiaritiesLayout(view: LinearLayout, peculiarities: List<String>) {
             }
         }
     })
+}
+
+fun HotelDTO.toModel(): Hotel {
+    return Hotel(
+        id = this.id,
+        name = this.name,
+        address = this.adress,
+        minimalPrice = this.minimal_price,
+        priceForIt = this.price_for_it,
+        rating = this.rating,
+        ratingName = this.rating_name,
+        imageUrls = this.image_urls,
+        aboutTheHotel = this.about_the_hotel
+    )
+}
+
+fun RoomDTO.toModel(): Room {
+    return Room(
+        id = this.id,
+        name = this.name,
+        price = this.price,
+        pricePer = this.price_per,
+        peculiarities = this.peculiarities,
+        imageUrls = this.image_urls
+    )
+}
+
+fun RoomsDTO.toModel(): Rooms{
+    return Rooms(
+        rooms = this.rooms.map {
+            it.toModel()
+        }
+    )
+}
+
+fun ReservationDTO.toModel(): Reservation{
+    return Reservation(
+        id = this.id,
+        hotelName = this.hotel_name,
+        hotelAddress = this.hotel_adress,
+        horating = this.horating,
+        ratingName = this.rating_name,
+        departure = this.departure,
+        arrivalCountry = this.arrival_country,
+        tourDateStart = this.tour_date_start,
+        tourDateStop = this.tour_date_stop,
+        numberOfNights = this.number_of_nights,
+        room = this.room,
+        nutrition = this.nutrition,
+        tourPrice = this.tour_price,
+        fuelCharge = this.fuel_charge,
+        serviceCharge = this.service_charge
+    )
 }
