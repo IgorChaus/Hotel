@@ -157,31 +157,31 @@ class RoomScreen: BaseFragment<RoomScreenBinding>() {
     @SuppressLint("SetTextI18n")
     private fun setReservationObserver() {
         viewModel.reservation.observe(viewLifecycleOwner) { reservation ->
-            binding.hotelInformation.tvHotelName.text = reservation.hotel_name
-            binding.hotelInformation.tvHotelAddress.text = reservation.hotel_adress
+            binding.hotelInformation.tvHotelName.text = reservation.hotelName
+            binding.hotelInformation.tvHotelAddress.text = reservation.hotelAddress
             binding.hotelInformation.rating.tvRating.text = reservation.horating.toString()
-            binding.hotelInformation.rating.tvRatingName.text = reservation.rating_name
+            binding.hotelInformation.rating.tvRatingName.text = reservation.ratingName
 
             binding.tourInformation.departure.text = reservation.departure
-            binding.tourInformation.destinition.text = reservation.arrival_country
+            binding.tourInformation.destinition.text = reservation.arrivalCountry
             binding.tourInformation.description.text = reservation.room
-            binding.tourInformation.dates.text = "${reservation.tour_date_start} " +
-                    "- ${reservation.tour_date_stop}"
-            binding.tourInformation.hotelName.text = reservation.hotel_name
+            binding.tourInformation.dates.text = "${reservation.tourDateStart} " +
+                    "- ${reservation.tourDateStop}"
+            binding.tourInformation.hotelName.text = reservation.hotelName
             binding.tourInformation.nutrition.text = reservation.nutrition
-            binding.tourInformation.duration.text = reservation.number_of_nights.toString()
+            binding.tourInformation.duration.text = reservation.numberOfNights.toString()
 
-            val tourPrice = String.format("%,d", reservation.tour_price)
+            val tourPrice = String.format("%,d", reservation.tourPrice)
                 .replace(",", " ") + getString(R.string.rub)
             binding.totalPrice.tvTourPrice.text = tourPrice
-            val fuelPrice = String.format("%,d", reservation.fuel_charge)
+            val fuelPrice = String.format("%,d", reservation.fuelCharge)
                 .replace(",", " ") + getString(R.string.rub)
             binding.totalPrice.tvFuelPrice.text = fuelPrice
-            val servicePrice = String.format("%,d", reservation.service_charge)
+            val servicePrice = String.format("%,d", reservation.serviceCharge)
                 .replace(",", " ") + getString(R.string.rub)
             binding.totalPrice.tvServicePrice.text = servicePrice
-            val total = reservation.tour_price + reservation
-                .fuel_charge + reservation.service_charge
+            val total = reservation.tourPrice + reservation
+                .fuelCharge + reservation.serviceCharge
             val totalString = String.format("%,d", total).replace(",", " ") +
                     getString(R.string.rub)
             binding.totalPrice.tvTotal.text = totalString

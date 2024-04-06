@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hotel.R
+import com.example.hotel.data.models.ReservationDTO
 import com.example.hotel.domain.models.Reservation
 import com.example.hotel.domain.repositories.NetworkRepository
 import com.example.hotel.utils.wrappers.Response
@@ -56,7 +57,7 @@ class RoomViewModel @Inject constructor(
                     _reservation.value = response.data
                 }
                 is Response.Error -> {
-                    Log.i("MyTag", "Error ${response.errorMessage}")
+                    Log.i("MyTag", "Error $response")
                 }
             }
         }

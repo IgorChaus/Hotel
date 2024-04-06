@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.hotel.data.models.HotelDTO
 import com.example.hotel.domain.models.Hotel
 import com.example.hotel.domain.repositories.NetworkRepository
 import com.example.hotel.utils.wrappers.Response
@@ -32,7 +33,7 @@ class HotelViewModel @Inject constructor(
                     _hotel.value = response.data
                 }
                 is Response.Error -> {
-                    Log.i("MyTag", "Error ${response.errorMessage}")
+                    Log.i("MyTag", "Error $response")
                 }
             }
         }

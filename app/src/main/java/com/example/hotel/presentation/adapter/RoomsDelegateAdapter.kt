@@ -32,7 +32,7 @@ class RoomsDelegateAdapter(var itemClickListener: ((Room) -> Unit)?) : ViewTypeD
             val price = String.format("%,d", room.price).replace(",", " ") +
                     binding.roomName.context.getString(R.string.rub)
             binding.roomPrice.text = price
-            binding.pricePer.text = room.price_per
+            binding.pricePer.text = room.pricePer
 
             binding.btChooseRoom.setOnClickListener {
                 itemClickListener?.invoke(room)
@@ -40,7 +40,7 @@ class RoomsDelegateAdapter(var itemClickListener: ((Room) -> Unit)?) : ViewTypeD
 
             binding.moreRoomLayout.setOnClickListener { }
 
-            val wrapperPhotos: List<ViewType> = room.image_urls.map { WrapperPhoto(it) }
+            val wrapperPhotos: List<ViewType> = room.imageUrls.map { WrapperPhoto(it) }
             val adapter = ContentAdapter()
             adapter.items = wrapperPhotos
             binding.vpHotel.adapter = adapter

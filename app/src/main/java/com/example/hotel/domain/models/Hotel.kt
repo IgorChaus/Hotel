@@ -3,13 +3,13 @@ package com.example.hotel.domain.models
 data class Hotel(
     val id: Int,
     val name: String,
-    val adress: String,
-    val minimal_price: Int,
-    val price_for_it: String,
+    val address: String,
+    val minimalPrice: Int,
+    val priceForIt: String,
     val rating: Int,
-    val rating_name: String,
-    val image_urls: List<String>,
-    val about_the_hotel: AboutTheHotel
+    val ratingName: String,
+    val imageUrls: List<String>,
+    val aboutTheHotel: AboutTheHotel
 ){
     data class AboutTheHotel(
         val description: String,

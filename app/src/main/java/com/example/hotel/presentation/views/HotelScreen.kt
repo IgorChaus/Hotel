@@ -49,7 +49,7 @@ class HotelScreen: BaseFragment<HotelScreenBinding>(){
         super.onViewCreated(view, savedInstanceState)
         viewModel.hotel.observe(viewLifecycleOwner){ hotel ->
             hotelName = hotel.name
-            val wrapperPhotos: List<ViewType> = hotel.image_urls.map { WrapperPhoto(it) }
+            val wrapperPhotos: List<ViewType> = hotel.imageUrls.map { WrapperPhoto(it) }
             val adapter = ContentAdapter()
             adapter.items = wrapperPhotos
             binding.vpHotel.adapter = adapter
@@ -57,25 +57,25 @@ class HotelScreen: BaseFragment<HotelScreenBinding>(){
             }.attach()
 
             binding.tvHotelName.text = hotel.name
-            binding.tvHotelAddress.text = hotel.adress
-            val hotelPrice = String.format("%,d", hotel.minimal_price)
+            binding.tvHotelAddress.text = hotel.address
+            val hotelPrice = String.format("%,d", hotel.minimalPrice)
                 .replace(",", " ")
             binding.tvPrice.text = getString(R.string.from) +" $hotelPrice" +
                     getString(R.string.rub)
-            binding.tvPriceAbout.text = hotel.price_for_it
+            binding.tvPriceAbout.text = hotel.priceForIt
             binding.rating.tvRating.text = hotel.rating.toString()
-            binding.rating.tvRatingName.text = hotel.rating_name
-            binding.tvDescriptionHotel.text = hotel.about_the_hotel.description
+            binding.rating.tvRatingName.text = hotel.ratingName
+            binding.tvDescriptionHotel.text = hotel.aboutTheHotel.description
 
             setPeculiaritiesLayout(
                 binding.layoutPeculiarities,
-                hotel.about_the_hotel.peculiarities
+                hotel.aboutTheHotel.peculiarities
             )
         }
 
         binding.btBottom.setOnClickListener {
             findNavController().navigate(
-                com.example.hotel.presentation.views.HotelScreenDirections.actionHotelScreenToRoomListScreen(
+                HotelScreenDirections.actionHotelScreenToRoomListScreen(
                     hotelName
                 )
             )

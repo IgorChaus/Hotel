@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.hotel.data.models.RoomDTO
 import com.example.hotel.domain.models.Room
 import com.example.hotel.domain.repositories.NetworkRepository
 import com.example.hotel.utils.wrappers.Response
@@ -29,9 +30,10 @@ class RoomListViewModel @Inject constructor(
             when (response) {
                 is Response.Success -> {
                     _rooms.value = response.data.rooms
+                    Log.i("MyTag", "response.data.rooms ${response.data.rooms}")
                 }
                 is Response.Error -> {
-                    Log.i("MyTag", "Error ${response.errorMessage}")
+                    Log.i("MyTag", "Error $response")
                 }
             }
         }

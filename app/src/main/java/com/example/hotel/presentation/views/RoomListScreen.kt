@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.hotel.presentation.adapter.ContentAdapter
 import com.example.hotel.appComponent
 import com.example.hotel.databinding.RoomListScreenBinding
+import com.example.hotel.data.models.RoomDTO
 import com.example.hotel.domain.models.Room
 import com.example.hotel.utils.BaseFragment
 import com.example.hotel.presentation.viewmodels.RoomListViewModel
@@ -28,7 +29,7 @@ class RoomListScreen: BaseFragment<RoomListScreenBinding>() {
         return RoomListScreenBinding.inflate(inflater, container, attachToRoot)
     }
 
-    val args by navArgs<com.example.hotel.presentation.views.RoomListScreenArgs>()
+    val args by navArgs<RoomListScreenArgs>()
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -60,7 +61,7 @@ class RoomListScreen: BaseFragment<RoomListScreenBinding>() {
     }
 
     private fun showRoom(room: Room) {
-        findNavController().navigate(com.example.hotel.presentation.views.RoomListScreenDirections.actionRoomListScreenToRoomScreen())
+        findNavController().navigate(RoomListScreenDirections.actionRoomListScreenToRoomScreen())
     }
 
 }

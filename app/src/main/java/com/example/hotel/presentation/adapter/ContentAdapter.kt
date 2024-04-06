@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import androidx.collection.SparseArrayCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hotel.data.models.RoomDTO
 import com.example.hotel.domain.models.Room
 
 class ContentAdapter(itemClickListener: ((Room) -> Unit)? = null)
