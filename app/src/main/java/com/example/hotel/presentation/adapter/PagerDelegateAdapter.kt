@@ -1,5 +1,6 @@
 package com.example.hotel.presentation.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,7 @@ class PagerDelegateAdapter : ViewTypeDelegateAdapter {
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: WrapperPhoto){
+            Log.i("MyTag", "item.image ${item.image}")
             Glide.with(itemView.context).load(item.image).into(binding.ivPhoto)
         }
     }

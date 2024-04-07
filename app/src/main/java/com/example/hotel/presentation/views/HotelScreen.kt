@@ -3,6 +3,7 @@ package com.example.hotel.presentation.views
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import com.example.hotel.databinding.HotelScreenBinding
 import com.example.hotel.utils.BaseFragment
 import com.example.hotel.utils.setPeculiaritiesLayout
 import com.example.hotel.presentation.viewmodels.HotelViewModel
+import com.example.hotel.utils.repeatOnCreated
 import com.example.hotel.utils.wrappers.WrapperPhoto
 import com.google.android.material.tabs.TabLayoutMediator
 import javax.inject.Inject
@@ -47,10 +49,11 @@ class HotelScreen: BaseFragment<HotelScreenBinding>(){
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.hotel.observe(viewLifecycleOwner){ hotel ->
+        viewModel.hotel.repeatOnCreated(this){ hotel ->
             hotelName = hotel.name
             val wrapperPhotos: List<ViewType> = hotel.imageUrls.map { WrapperPhoto(it) }
             val adapter = ContentAdapter()
+            Log.i("MyTag", "wrapperPhotos $wrapperPhotos")
             adapter.items = wrapperPhotos
             binding.vpHotel.adapter = adapter
             TabLayoutMediator(binding.tabLayout, binding.vpHotel) { _, _ ->
@@ -74,11 +77,8 @@ class HotelScreen: BaseFragment<HotelScreenBinding>(){
         }
 
         binding.btBottom.setOnClickListener {
-            findNavController().navigate(
-                HotelScreenDirections.actionHotelScreenToRoomListScreen(
-                    hotelName
-                )
-            )
+            val acrion = HotelScreenDirections.actionHotelScreenToRoomListScreen(hotelName)
+            findNavController().navigate(acrion)
         }
 
         binding.tvHotelAddress.setOnClickListener {  }

@@ -5,6 +5,10 @@ import android.view.ViewTreeObserver
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.hotel.R
 import com.example.hotel.data.models.HotelDTO
 import com.example.hotel.data.models.ReservationDTO
@@ -14,6 +18,10 @@ import com.example.hotel.domain.models.Hotel
 import com.example.hotel.domain.models.Reservation
 import com.example.hotel.domain.models.Room
 import com.example.hotel.domain.models.Rooms
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 
 fun setPeculiaritiesLayout(view: LinearLayout, peculiarities: List<String>) {
@@ -129,4 +137,17 @@ fun ReservationDTO.toModel(): Reservation{
         fuelCharge = this.fuel_charge,
         serviceCharge = this.service_charge
     )
+}
+
+fun <T> Flow<T>.repeatOnCreated(lifecycleOwner: LifecycleOwner) {
+    lifecycleOwner.lifecycleScope.launch {
+        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
+            this@repeatOnCreated.collect()
+        }
+    }
+}
+
+fun <T> Flow<T>.repeatOnCreated(lifecycleOwner: LifecycleOwner, action: suspend (T) -> Unit) {
+    onEach { action(it) }
+        .repeatOnCreated(lifecycleOwner)
 }
