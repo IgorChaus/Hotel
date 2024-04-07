@@ -26,7 +26,6 @@ class PagerDelegateAdapter : ViewTypeDelegateAdapter {
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: WrapperPhoto){
-            Log.i("MyTag", "item.image ${item.image}")
             Glide.with(itemView.context).load(item.image).into(binding.ivPhoto)
         }
     }

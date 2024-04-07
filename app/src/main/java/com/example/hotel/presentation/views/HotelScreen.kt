@@ -3,7 +3,6 @@ package com.example.hotel.presentation.views
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,14 +11,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.hotel.R
-import com.example.hotel.presentation.adapter.ContentAdapter
-import com.example.hotel.presentation.adapter.ViewType
 import com.example.hotel.appComponent
 import com.example.hotel.databinding.HotelScreenBinding
-import com.example.hotel.utils.BaseFragment
-import com.example.hotel.utils.setPeculiaritiesLayout
+import com.example.hotel.presentation.adapter.ContentAdapter
+import com.example.hotel.presentation.adapter.ViewType
 import com.example.hotel.presentation.viewmodels.HotelViewModel
+import com.example.hotel.utils.BaseFragment
 import com.example.hotel.utils.repeatOnCreated
+import com.example.hotel.utils.setPeculiaritiesLayout
 import com.example.hotel.utils.wrappers.WrapperPhoto
 import com.google.android.material.tabs.TabLayoutMediator
 import javax.inject.Inject
@@ -53,7 +52,6 @@ class HotelScreen: BaseFragment<HotelScreenBinding>(){
             hotelName = hotel.name
             val wrapperPhotos: List<ViewType> = hotel.imageUrls.map { WrapperPhoto(it) }
             val adapter = ContentAdapter()
-            Log.i("MyTag", "wrapperPhotos $wrapperPhotos")
             adapter.items = wrapperPhotos
             binding.vpHotel.adapter = adapter
             TabLayoutMediator(binding.tabLayout, binding.vpHotel) { _, _ ->
@@ -77,8 +75,8 @@ class HotelScreen: BaseFragment<HotelScreenBinding>(){
         }
 
         binding.btBottom.setOnClickListener {
-            val acrion = HotelScreenDirections.actionHotelScreenToRoomListScreen(hotelName)
-            findNavController().navigate(acrion)
+            val action = HotelScreenDirections.actionHotelScreenToRoomListScreen(hotelName)
+            findNavController().navigate(action)
         }
 
         binding.tvHotelAddress.setOnClickListener {  }

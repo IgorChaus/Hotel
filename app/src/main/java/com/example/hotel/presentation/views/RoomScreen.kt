@@ -207,7 +207,7 @@ class RoomScreen: BaseFragment<RoomScreenBinding>() {
     }
 
     private fun launchFinishScreen() {
-        findNavController().navigate(com.example.hotel.presentation.views.RoomScreenDirections.actionRoomScreenToFinishScreen())
+        findNavController().navigate(RoomScreenDirections.actionRoomScreenToFinishScreen())
     }
 
     companion object{
