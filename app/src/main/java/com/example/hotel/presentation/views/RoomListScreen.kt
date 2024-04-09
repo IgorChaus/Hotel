@@ -43,10 +43,7 @@ class RoomListScreen: BaseFragment<RoomListScreenBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ContentAdapter{
-            showRoom(it)
-        }
-
+        val adapter = ContentAdapter { showRoom(it) }
         binding.rv.adapter = adapter
 
         viewModel.rooms.repeatOnCreated(this) { rooms ->
@@ -56,8 +53,14 @@ class RoomListScreen: BaseFragment<RoomListScreenBinding>() {
         binding.headerScreen.tvHeader.text = args.hotelName
 
         binding.headerScreen.backButton.setOnClickListener{
-            findNavController().popBackStack()
+            goBack()
         }
+
+        viewModel.getRooms()
+    }
+
+    private fun goBack() {
+        findNavController().popBackStack()
     }
 
     private fun showRoom(room: Room) {

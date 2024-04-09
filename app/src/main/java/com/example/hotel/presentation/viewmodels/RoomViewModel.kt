@@ -3,15 +3,14 @@ package com.example.hotel.presentation.viewmodels
 import android.app.Application
 import android.util.Log
 import android.util.Patterns
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hotel.R
-import com.example.hotel.data.models.ReservationDTO
 import com.example.hotel.domain.models.Reservation
 import com.example.hotel.domain.repositories.NetworkRepository
 import com.example.hotel.utils.wrappers.Response
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,17 +19,14 @@ class RoomViewModel @Inject constructor(
     private val application: Application
 ) : ViewModel() {
 
-    private val _reservation: MutableLiveData<Reservation> = MutableLiveData()
-    val reservation: LiveData<Reservation>
-        get() = _reservation
+    private val _reservation = MutableSharedFlow<Reservation>()
+    val reservation = _reservation.asSharedFlow()
 
-    private val _emailError: MutableLiveData<Boolean> = MutableLiveData()
-    val emailError: LiveData<Boolean>
-        get() = _emailError
+    private val _emailError = MutableSharedFlow<Boolean>()
+    val emailError = _emailError.asSharedFlow()
 
-    private val _showEmptyFields: MutableLiveData<Boolean> = MutableLiveData(false)
-    val showEmptyFields: LiveData<Boolean>
-        get() = _showEmptyFields
+    private val _showEmptyFields = MutableSharedFlow<Boolean>()
+    val showEmptyFields = _showEmptyFields.asSharedFlow()
 
     var listTouristGroups = arrayListOf("Первый турист")
     private val touristInfo = listOf(
@@ -54,7 +50,7 @@ class RoomViewModel @Inject constructor(
             val response = repository.getReservation()
             when (response) {
                 is Response.Success -> {
-                    _reservation.value = response.data
+                    _reservation.emit(response.data)
                 }
                 is Response.Error -> {
                     Log.i("MyTag", "Error $response")
@@ -64,11 +60,17 @@ class RoomViewModel @Inject constructor(
     }
 
     fun checkEmail(email: String){
-        _emailError.value = !Patterns.EMAIL_ADDRESS.matcher(email).matches() && email.isNotEmpty()
+        viewModelScope.launch {
+            _emailError.emit(!Patterns.EMAIL_ADDRESS.matcher(email).matches() && email.isNotEmpty())
+        }
+
     }
 
     fun resetError(){
-        _emailError.value = false
+        viewModelScope.launch{
+            _emailError.emit(false)
+        }
+
     }
 
     fun addNewTourist(){
@@ -79,15 +81,16 @@ class RoomViewModel @Inject constructor(
     }
 
     fun isAnyFieldEmpty(touristList: MutableMap<Pair<Int, Int>, String>): Boolean {
-        for (i in 0 until  listTouristGroups.size){
-            for (j in 0 .. 5){
-                if(touristList[Pair(i, j)] == null) {
-                    _showEmptyFields.value = true
+
+        for (i in 0 until listTouristGroups.size) {
+            for (j in 0..5) {
+                if (touristList[Pair(i, j)] == null) {
+                    viewModelScope.launch { _showEmptyFields.emit(true) }
                     return true
                 }
             }
         }
-        _showEmptyFields.value = false
+        viewModelScope.launch { _showEmptyFields.emit(false) }
         return false
     }
 

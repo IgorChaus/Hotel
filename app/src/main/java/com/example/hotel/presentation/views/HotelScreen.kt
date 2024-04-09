@@ -48,7 +48,31 @@ class HotelScreen: BaseFragment<HotelScreenBinding>(){
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.hotel.repeatOnCreated(this){ hotel ->
+        subscribeOnViewModel()
+        setupOnClickListeners()
+        viewModel.getHotel()
+    }
+
+    private fun setupOnClickListeners() {
+        binding.btNext.setOnClickListener {
+            launchRoomListScreen()
+        }
+
+        binding.tvHotelAddress.setOnClickListener { }
+
+        binding.buttonsInfo.buttonComfort.setOnClickListener { }
+        binding.buttonsInfo.buttonWhatIncluded.setOnClickListener { }
+        binding.buttonsInfo.buttonWhatNoIncluded.setOnClickListener { }
+    }
+
+    private fun launchRoomListScreen() {
+        val action = HotelScreenDirections.actionHotelScreenToRoomListScreen(hotelName)
+        findNavController().navigate(action)
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun subscribeOnViewModel() {
+        viewModel.hotel.repeatOnCreated(this) { hotel ->
             hotelName = hotel.name
             val wrapperPhotos: List<ViewType> = hotel.imageUrls.map { WrapperPhoto(it) }
             val adapter = ContentAdapter()
@@ -61,7 +85,7 @@ class HotelScreen: BaseFragment<HotelScreenBinding>(){
             binding.tvHotelAddress.text = hotel.address
             val hotelPrice = String.format("%,d", hotel.minimalPrice)
                 .replace(",", " ")
-            binding.tvPrice.text = getString(R.string.from) +" $hotelPrice" +
+            binding.tvPrice.text = getString(R.string.from) + " $hotelPrice" +
                     getString(R.string.rub)
             binding.tvPriceAbout.text = hotel.priceForIt
             binding.rating.tvRating.text = hotel.rating.toString()
@@ -73,21 +97,6 @@ class HotelScreen: BaseFragment<HotelScreenBinding>(){
                 hotel.aboutTheHotel.peculiarities
             )
         }
-
-        binding.btBottom.setOnClickListener {
-            val action = HotelScreenDirections.actionHotelScreenToRoomListScreen(hotelName)
-            findNavController().navigate(action)
-        }
-
-        binding.tvHotelAddress.setOnClickListener {  }
-
-        binding.buttonsInfo.buttonComfort.setOnClickListener {  }
-        binding.buttonsInfo.buttonWhatIncluded.setOnClickListener {  }
-        binding.buttonsInfo.buttonWhatNoIncluded.setOnClickListener {  }
-
-        requireActivity().supportFragmentManager
-            .popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-
     }
 
 }

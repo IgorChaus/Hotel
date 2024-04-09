@@ -20,6 +20,7 @@ import com.example.hotel.utils.BaseFragment
 import com.example.hotel.utils.NumberTextWatcher
 import com.example.hotel.presentation.viewmodels.RoomViewModel
 import com.example.hotel.domain.models.TouristData
+import com.example.hotel.utils.repeatOnCreated
 import javax.inject.Inject
 
 class RoomScreen: BaseFragment<RoomScreenBinding>() {
@@ -51,8 +52,26 @@ class RoomScreen: BaseFragment<RoomScreenBinding>() {
         setExpandableListView()
         setReservationObserver()
         setShowEmptyFieldsObserver()
+        restoreDataIfFragmentRecreated(savedInstanceState)
+        setEmailFieldHandlers()
+        setAddButtonListener()
+        setupOnClickListeners()
+    }
 
-        if(savedInstanceState != null) {
+    private fun setupOnClickListeners() {
+        binding.buttonPay.setOnClickListener {
+            if (!viewModel.isAnyFieldEmpty(expandableListAdapter.touristList)) {
+                launchFinishScreen()
+            }
+        }
+
+        binding.headerScreen.backButton.setOnClickListener {
+            goBack()
+        }
+    }
+
+    private fun restoreDataIfFragmentRecreated(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) {
             val touristData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 savedInstanceState.getParcelable(KEY_TOURIST_LIST, TouristData::class.java)
             } else {
@@ -79,20 +98,10 @@ class RoomScreen: BaseFragment<RoomScreenBinding>() {
                 }
             }
         }
+    }
 
-        setEmailFieldHandlers()
-        setAddButtonListener()
-
-        binding.buttonPay.setOnClickListener {
-            if(!viewModel.isAnyFieldEmpty(expandableListAdapter.touristList)){
-                launchFinishScreen()
-            }
-        }
-
-        binding.headerScreen.backButton.setOnClickListener{
-            findNavController().popBackStack()
-        }
-
+    private fun goBack() {
+        findNavController().popBackStack()
     }
 
     private fun setExpandableListView() {
@@ -123,7 +132,7 @@ class RoomScreen: BaseFragment<RoomScreenBinding>() {
             R.drawable.rounded_corners_error
         )
 
-        viewModel.emailError.observe(viewLifecycleOwner) {
+        viewModel.emailError.repeatOnCreated(this) {
             if (it) {
                 binding.customInfo.containerEmail.background = errorColor
             } else {
@@ -142,7 +151,7 @@ class RoomScreen: BaseFragment<RoomScreenBinding>() {
     }
 
     private fun setShowEmptyFieldsObserver() {
-        viewModel.showEmptyFields.observe(viewLifecycleOwner) {
+        viewModel.showEmptyFields.repeatOnCreated(this) {
             if (it) {
                 expandableListAdapter.isShowError = true
                 expandableListAdapter.notifyDataSetChanged()
@@ -156,7 +165,7 @@ class RoomScreen: BaseFragment<RoomScreenBinding>() {
 
     @SuppressLint("SetTextI18n")
     private fun setReservationObserver() {
-        viewModel.reservation.observe(viewLifecycleOwner) { reservation ->
+        viewModel.reservation.repeatOnCreated(this) { reservation ->
             binding.hotelInformation.tvHotelName.text = reservation.hotelName
             binding.hotelInformation.tvHotelAddress.text = reservation.hotelAddress
             binding.hotelInformation.rating.tvRating.text = reservation.horating.toString()

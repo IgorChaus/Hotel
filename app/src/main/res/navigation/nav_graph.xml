@@ -33,7 +33,8 @@
         tools:layout="@layout/hotel_screen">
         <action
             android:id="@+id/action_roomScreen_to_finishScreen"
-            app:destination="@id/finishScreen" />
+            app:destination="@id/finishScreen"
+            app:popUpTo="@id/hotelScreen"/>
     </fragment>
     <fragment
         android:id="@+id/finishScreen"

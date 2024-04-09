@@ -18,11 +18,7 @@ class RoomListViewModel @Inject constructor(
     private val _rooms = MutableSharedFlow<List<Room>>()
     val rooms = _rooms.asSharedFlow()
 
-    init{
-        getRooms()
-    }
-
-    private fun getRooms(){
+    fun getRooms(){
         viewModelScope.launch {
             val response = repository.getRooms()
             when (response) {

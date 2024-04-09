@@ -1,11 +1,8 @@
 package com.example.hotel.presentation.viewmodels
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.hotel.data.models.HotelDTO
 import com.example.hotel.domain.models.Hotel
 import com.example.hotel.domain.repositories.NetworkRepository
 import com.example.hotel.utils.wrappers.Response
@@ -21,11 +18,7 @@ class HotelViewModel @Inject constructor(
     private val _hotel = MutableSharedFlow<Hotel>()
     val hotel = _hotel.asSharedFlow()
 
-    init{
-        getHotel()
-    }
-
-    private fun getHotel(){
+    fun getHotel(){
         viewModelScope.launch {
             val response = repository.getHotel()
             when (response) {
