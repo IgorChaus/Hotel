@@ -15,20 +15,13 @@ import com.example.hotel.domain.models.Room
 import com.example.hotel.presentation.adapter.ContentAdapter
 import com.example.hotel.presentation.viewmodels.RoomListViewModel
 import com.example.hotel.utils.BaseFragment
+import com.example.hotel.utils.repeatOnCreated
 import javax.inject.Inject
 
 
 class RoomListScreen: BaseFragment<RoomListScreenBinding>() {
 
-    override fun inflateBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        attachToRoot: Boolean
-    ): RoomListScreenBinding {
-        return RoomListScreenBinding.inflate(inflater, container, attachToRoot)
-    }
-
-    val args by navArgs<RoomListScreenArgs>()
+    private val args by navArgs<RoomListScreenArgs>()
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -37,6 +30,14 @@ class RoomListScreen: BaseFragment<RoomListScreenBinding>() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         context.appComponent.inject(this)
+    }
+
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        attachToRoot: Boolean
+    ): RoomListScreenBinding {
+        return RoomListScreenBinding.inflate(inflater, container, attachToRoot)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,7 +49,7 @@ class RoomListScreen: BaseFragment<RoomListScreenBinding>() {
 
         binding.rv.adapter = adapter
 
-        viewModel.rooms.observe(viewLifecycleOwner) { rooms ->
+        viewModel.rooms.repeatOnCreated(this) { rooms ->
             adapter.items = rooms
         }
 
