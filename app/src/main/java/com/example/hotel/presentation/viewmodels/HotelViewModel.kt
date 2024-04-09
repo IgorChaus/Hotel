@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.hotel.domain.models.Hotel
 import com.example.hotel.domain.repositories.NetworkRepository
 import com.example.hotel.utils.wrappers.Response
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
@@ -19,17 +20,21 @@ class HotelViewModel @Inject constructor(
     val hotel = _hotel.asSharedFlow()
 
     fun getHotel(){
-        viewModelScope.launch {
+        viewModelScope.launch(coroutineExceptionHandler) {
             val response = repository.getHotel()
             when (response) {
-                is Response.Success -> {
-                    _hotel.emit(response.data)
-                }
-                is Response.Error -> {
-                    Log.i("MyTag", "Error $response")
-                }
+                is Response.Success -> _hotel.emit(response.data)
+                is Response.Error -> handleException(response.exception)
             }
         }
+    }
+
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
+        handleException(exception)
+    }
+
+    private fun handleException(throwable: Throwable?) {
+        Log.i("MyTag", "Exception $throwable")
     }
 
 }

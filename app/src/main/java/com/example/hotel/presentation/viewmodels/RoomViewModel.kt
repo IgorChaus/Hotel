@@ -9,6 +9,7 @@ import com.example.hotel.R
 import com.example.hotel.domain.models.Reservation
 import com.example.hotel.domain.repositories.NetworkRepository
 import com.example.hotel.utils.wrappers.Response
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
@@ -41,29 +42,32 @@ class RoomViewModel @Inject constructor(
         "Первый турист" to touristInfo,
     )
 
-    init{
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
+        handleException(exception)
+    }
+
+    init {
         getReservation()
     }
 
-    private fun getReservation(){
-        viewModelScope.launch {
+    private fun getReservation() {
+        viewModelScope.launch(coroutineExceptionHandler) {
             val response = repository.getReservation()
             when (response) {
-                is Response.Success -> {
-                    _reservation.emit(response.data)
-                }
-                is Response.Error -> {
-                    Log.i("MyTag", "Error $response")
-                }
+                is Response.Success -> _reservation.emit(response.data)
+                is Response.Error -> handleException(response.exception)
             }
         }
+    }
+
+    private fun handleException(throwable: Throwable?) {
+        Log.i("MyTag", "Error $throwable")
     }
 
     fun checkEmail(email: String){
         viewModelScope.launch {
             _emailError.emit(!Patterns.EMAIL_ADDRESS.matcher(email).matches() && email.isNotEmpty())
         }
-
     }
 
     fun resetError(){
