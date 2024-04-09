@@ -24,12 +24,20 @@ class FinishScreen: BaseFragment<FinishScreenBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.headerScreen.tvHeader.text = getString(R.string.order_payed)
-        binding.headerScreen.backButton.setOnClickListener{
-            requireActivity().supportFragmentManager.popBackStack()
+        setupOnClickListeners()
+    }
+
+    private fun setupOnClickListeners() {
+        binding.headerScreen.backButton.setOnClickListener {
+            goHotelScreen()
         }
         binding.btBottom.setOnClickListener {
-            findNavController().popBackStack()
+            goHotelScreen()
         }
+    }
+
+    private fun goHotelScreen() {
+        findNavController().popBackStack()
     }
 
 }

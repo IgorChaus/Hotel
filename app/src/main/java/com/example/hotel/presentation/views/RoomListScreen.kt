@@ -9,27 +9,19 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.hotel.presentation.adapter.ContentAdapter
 import com.example.hotel.appComponent
 import com.example.hotel.databinding.RoomListScreenBinding
-import com.example.hotel.data.models.RoomDTO
 import com.example.hotel.domain.models.Room
-import com.example.hotel.utils.BaseFragment
+import com.example.hotel.presentation.adapter.ContentAdapter
 import com.example.hotel.presentation.viewmodels.RoomListViewModel
+import com.example.hotel.utils.BaseFragment
+import com.example.hotel.utils.repeatOnCreated
 import javax.inject.Inject
 
 
 class RoomListScreen: BaseFragment<RoomListScreenBinding>() {
 
-    override fun inflateBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        attachToRoot: Boolean
-    ): RoomListScreenBinding {
-        return RoomListScreenBinding.inflate(inflater, container, attachToRoot)
-    }
-
-    val args by navArgs<RoomListScreenArgs>()
+    private val args by navArgs<RoomListScreenArgs>()
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -40,24 +32,35 @@ class RoomListScreen: BaseFragment<RoomListScreenBinding>() {
         context.appComponent.inject(this)
     }
 
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        attachToRoot: Boolean
+    ): RoomListScreenBinding {
+        return RoomListScreenBinding.inflate(inflater, container, attachToRoot)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ContentAdapter{
-            showRoom(it)
-        }
-
+        val adapter = ContentAdapter { showRoom(it) }
         binding.rv.adapter = adapter
 
-        viewModel.rooms.observe(viewLifecycleOwner) { rooms ->
+        viewModel.rooms.repeatOnCreated(this) { rooms ->
             adapter.items = rooms
         }
 
         binding.headerScreen.tvHeader.text = args.hotelName
 
         binding.headerScreen.backButton.setOnClickListener{
-            findNavController().popBackStack()
+            goBack()
         }
+
+        viewModel.getRooms()
+    }
+
+    private fun goBack() {
+        findNavController().popBackStack()
     }
 
     private fun showRoom(room: Room) {

@@ -2,18 +2,17 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_navigation"
+    android:id="@+id/nav_graph"
     app:startDestination="@id/hotelScreen">
 
     <fragment
         android:id="@+id/hotelScreen"
         android:name="com.example.hotel.presentation.views.HotelScreen"
-        android:label="HotelScreen"
-        tools:layout="@layout/hotel_screen">
+        android:label="hotel_screen"
+        tools:layout="@layout/hotel_screen" >
         <action
             android:id="@+id/action_hotelScreen_to_roomListScreen"
-            app:destination="@id/roomListScreen"
-            app:popUpTo="@id/hotelScreen" />
+            app:destination="@id/roomListScreen" />
     </fragment>
     <fragment
         android:id="@+id/roomListScreen"
@@ -22,8 +21,7 @@
         tools:layout="@layout/room_list_screen">
         <action
             android:id="@+id/action_roomListScreen_to_roomScreen"
-            app:destination="@id/roomScreen"
-            app:popUpTo="@id/roomListScreen" />
+            app:destination="@id/roomScreen" />
         <argument
             android:name="hotelName"
             app:argType="string" />
@@ -32,11 +30,11 @@
         android:id="@+id/roomScreen"
         android:name="com.example.hotel.presentation.views.RoomScreen"
         android:label="RoomScreen"
-        tools:layout="@layout/room_screen">
+        tools:layout="@layout/hotel_screen">
         <action
             android:id="@+id/action_roomScreen_to_finishScreen"
             app:destination="@id/finishScreen"
-            app:popUpTo="@id/hotelScreen" />
+            app:popUpTo="@id/hotelScreen"/>
     </fragment>
     <fragment
         android:id="@+id/finishScreen"

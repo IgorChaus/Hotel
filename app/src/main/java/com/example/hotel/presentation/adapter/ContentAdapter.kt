@@ -1,5 +1,6 @@
 package com.example.hotel.presentation.adapter
 
+import android.util.Log
 import android.view.ViewGroup
 import androidx.collection.SparseArrayCompat
 import androidx.recyclerview.widget.DiffUtil

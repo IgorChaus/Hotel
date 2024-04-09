@@ -11,13 +11,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.hotel.R
-import com.example.hotel.presentation.adapter.ContentAdapter
-import com.example.hotel.presentation.adapter.ViewType
 import com.example.hotel.appComponent
 import com.example.hotel.databinding.HotelScreenBinding
-import com.example.hotel.utils.BaseFragment
-import com.example.hotel.utils.setPeculiaritiesLayout
+import com.example.hotel.presentation.adapter.ContentAdapter
+import com.example.hotel.presentation.adapter.ViewType
 import com.example.hotel.presentation.viewmodels.HotelViewModel
+import com.example.hotel.utils.BaseFragment
+import com.example.hotel.utils.repeatOnCreated
+import com.example.hotel.utils.setPeculiaritiesLayout
 import com.example.hotel.utils.wrappers.WrapperPhoto
 import com.google.android.material.tabs.TabLayoutMediator
 import javax.inject.Inject
@@ -47,7 +48,31 @@ class HotelScreen: BaseFragment<HotelScreenBinding>(){
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.hotel.observe(viewLifecycleOwner){ hotel ->
+        subscribeOnViewModel()
+        setupOnClickListeners()
+        viewModel.getHotel()
+    }
+
+    private fun setupOnClickListeners() {
+        binding.btNext.setOnClickListener {
+            launchRoomListScreen()
+        }
+
+        binding.tvHotelAddress.setOnClickListener { }
+
+        binding.buttonsInfo.buttonComfort.setOnClickListener { }
+        binding.buttonsInfo.buttonWhatIncluded.setOnClickListener { }
+        binding.buttonsInfo.buttonWhatNoIncluded.setOnClickListener { }
+    }
+
+    private fun launchRoomListScreen() {
+        val action = HotelScreenDirections.actionHotelScreenToRoomListScreen(hotelName)
+        findNavController().navigate(action)
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun subscribeOnViewModel() {
+        viewModel.hotel.repeatOnCreated(this) { hotel ->
             hotelName = hotel.name
             val wrapperPhotos: List<ViewType> = hotel.imageUrls.map { WrapperPhoto(it) }
             val adapter = ContentAdapter()
@@ -60,7 +85,7 @@ class HotelScreen: BaseFragment<HotelScreenBinding>(){
             binding.tvHotelAddress.text = hotel.address
             val hotelPrice = String.format("%,d", hotel.minimalPrice)
                 .replace(",", " ")
-            binding.tvPrice.text = getString(R.string.from) +" $hotelPrice" +
+            binding.tvPrice.text = getString(R.string.from) + " $hotelPrice" +
                     getString(R.string.rub)
             binding.tvPriceAbout.text = hotel.priceForIt
             binding.rating.tvRating.text = hotel.rating.toString()
@@ -72,24 +97,6 @@ class HotelScreen: BaseFragment<HotelScreenBinding>(){
                 hotel.aboutTheHotel.peculiarities
             )
         }
-
-        binding.btBottom.setOnClickListener {
-            findNavController().navigate(
-                HotelScreenDirections.actionHotelScreenToRoomListScreen(
-                    hotelName
-                )
-            )
-        }
-
-        binding.tvHotelAddress.setOnClickListener {  }
-
-        binding.buttonsInfo.buttonComfort.setOnClickListener {  }
-        binding.buttonsInfo.buttonWhatIncluded.setOnClickListener {  }
-        binding.buttonsInfo.buttonWhatNoIncluded.setOnClickListener {  }
-
-        requireActivity().supportFragmentManager
-            .popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-
     }
 
 }
