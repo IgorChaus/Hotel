@@ -1,9 +1,7 @@
-package com.ripotu.controlreality.di
+package com.example.hotel.di
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.hotel.di.ApplicationScope
 import dagger.Binds
 import dagger.Module
 import javax.inject.Inject

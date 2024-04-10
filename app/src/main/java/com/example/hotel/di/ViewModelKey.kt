@@ -1,4 +1,4 @@
-package com.ripotu.controlreality.di
+package com.example.hotel.di
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey
