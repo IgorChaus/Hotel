@@ -5,8 +5,8 @@ import com.example.hotel.domain.models.Hotel
 import com.example.hotel.domain.models.Reservation
 import com.example.hotel.domain.models.Room
 import com.example.hotel.domain.repositories.NetworkRepository
-import com.example.hotel.utils.toModel
-import com.example.hotel.utils.wrappers.Response
+import com.example.hotel.common.toModel
+import com.example.hotel.domain.models.Response
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

@@ -1,12 +1,10 @@
 package com.example.hotel.presentation.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.hotel.databinding.PhotoHotelBinding
-import com.example.hotel.utils.wrappers.WrapperPhoto
 
 class PagerDelegateAdapter : ViewTypeDelegateAdapter {
 

@@ -1,4 +1,4 @@
-package com.example.hotel
+package com.example.hotel.common
 
 import android.app.Application
 import android.content.Context

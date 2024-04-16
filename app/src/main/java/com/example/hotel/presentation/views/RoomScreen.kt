@@ -14,13 +14,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.hotel.R
 import com.example.hotel.presentation.adapter.ExpandableListAdapter
-import com.example.hotel.appComponent
+import com.example.hotel.common.appComponent
 import com.example.hotel.databinding.RoomScreenBinding
-import com.example.hotel.utils.BaseFragment
-import com.example.hotel.utils.NumberTextWatcher
+import com.example.hotel.common.BaseFragment
 import com.example.hotel.presentation.viewmodels.RoomViewModel
 import com.example.hotel.domain.models.TouristData
-import com.example.hotel.utils.repeatOnCreated
+import com.example.hotel.common.repeatOnCreated
 import javax.inject.Inject
 
 class RoomScreen: BaseFragment<RoomScreenBinding>() {

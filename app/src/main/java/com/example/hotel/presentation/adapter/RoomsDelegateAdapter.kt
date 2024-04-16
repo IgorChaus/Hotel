@@ -6,8 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.hotel.R
 import com.example.hotel.databinding.ItemRoomBinding
 import com.example.hotel.domain.models.Room
-import com.example.hotel.utils.setPeculiaritiesLayout
-import com.example.hotel.utils.wrappers.WrapperPhoto
+import com.example.hotel.common.setPeculiaritiesLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class RoomsDelegateAdapter(var itemClickListener: ((Room) -> Unit)?) : ViewTypeDelegateAdapter {

@@ -1,7 +1,7 @@
 package com.example.hotel.di
 
 import android.app.Application
-import com.example.hotel.HotelApp
+import com.example.hotel.common.HotelApp
 import com.example.hotel.presentation.views.HotelScreen
 import com.example.hotel.presentation.views.RoomListScreen
 import com.example.hotel.presentation.views.RoomScreen

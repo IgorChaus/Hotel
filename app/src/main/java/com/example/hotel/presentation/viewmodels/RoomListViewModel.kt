@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hotel.domain.models.Room
 import com.example.hotel.domain.repositories.NetworkRepository
-import com.example.hotel.utils.wrappers.Response
+import com.example.hotel.domain.models.Response
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow

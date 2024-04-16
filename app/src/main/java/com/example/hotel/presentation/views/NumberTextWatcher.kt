@@ -1,4 +1,4 @@
-package com.example.hotel.utils
+package com.example.hotel.presentation.views
 
 import android.text.Editable
 import android.text.TextWatcher

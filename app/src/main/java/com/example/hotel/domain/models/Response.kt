@@ -1,4 +1,4 @@
-package com.example.hotel.utils.wrappers
+package com.example.hotel.domain.models
 
 import java.lang.Exception
 

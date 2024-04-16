@@ -1,4 +1,4 @@
-package com.example.hotel.utils
+package com.example.hotel.common
 
 import android.os.Bundle
 import android.view.LayoutInflater

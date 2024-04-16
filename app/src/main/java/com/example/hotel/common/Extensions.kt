@@ -1,4 +1,4 @@
-package com.example.hotel.utils
+package com.example.hotel.common
 
 import android.util.TypedValue
 import android.view.ViewTreeObserver

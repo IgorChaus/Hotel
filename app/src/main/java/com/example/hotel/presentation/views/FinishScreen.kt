@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.hotel.R
 import com.example.hotel.databinding.FinishScreenBinding
-import com.example.hotel.utils.BaseFragment
+import com.example.hotel.common.BaseFragment
 
 
 class FinishScreen: BaseFragment<FinishScreenBinding>() {

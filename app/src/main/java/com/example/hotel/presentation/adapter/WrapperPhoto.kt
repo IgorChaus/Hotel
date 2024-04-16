@@ -1,4 +1,4 @@
-package com.example.hotel.utils.wrappers
+package com.example.hotel.presentation.adapter
 
 
 import com.example.hotel.presentation.adapter.ContentAdapter
