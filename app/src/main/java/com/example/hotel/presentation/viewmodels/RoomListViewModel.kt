@@ -23,7 +23,7 @@ class RoomListViewModel @Inject constructor(
         viewModelScope.launch(coroutineExceptionHandler) {
             val response = repository.getRooms()
             when (response) {
-                is Response.Success -> _rooms.emit(response.data.rooms)
+                is Response.Success -> _rooms.emit(response.data)
                 is Response.Error -> handleException(response.exception)
             }
         }

@@ -3,7 +3,7 @@ package com.example.hotel.data.repository
 import com.example.hotel.data.remote.RetrofitApi
 import com.example.hotel.domain.models.Hotel
 import com.example.hotel.domain.models.Reservation
-import com.example.hotel.domain.models.Rooms
+import com.example.hotel.domain.models.Room
 import com.example.hotel.domain.repositories.NetworkRepository
 import com.example.hotel.utils.toModel
 import com.example.hotel.utils.wrappers.Response
@@ -26,7 +26,7 @@ class NetworkRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getRooms(): Response<Rooms> {
+    override suspend fun getRooms(): Response<List<Room>> {
         return withContext(Dispatchers.IO) {
             try {
                 val response = service.getRooms().toModel()

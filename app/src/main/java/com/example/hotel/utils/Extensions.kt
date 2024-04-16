@@ -17,7 +17,6 @@ import com.example.hotel.data.models.RoomsDTO
 import com.example.hotel.domain.models.Hotel
 import com.example.hotel.domain.models.Reservation
 import com.example.hotel.domain.models.Room
-import com.example.hotel.domain.models.Rooms
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -111,12 +110,10 @@ fun RoomDTO.toModel(): Room {
     )
 }
 
-fun RoomsDTO.toModel(): Rooms{
-    return Rooms(
-        rooms = this.rooms.map {
+fun RoomsDTO.toModel(): List<Room>{
+    return  this.rooms.map {
             it.toModel()
         }
-    )
 }
 
 fun ReservationDTO.toModel(): Reservation{

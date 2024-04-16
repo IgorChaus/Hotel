@@ -31,7 +31,6 @@ class HotelScreen: BaseFragment<HotelScreenBinding>(){
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private val viewModel: HotelViewModel by viewModels { viewModelFactory }
 
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         context.appComponent.inject(this)
