@@ -45,6 +45,7 @@ logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", ver
 
 rxandroid = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxandroid" }
 rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
+rxretrofit = { module = "com.squareup.retrofit2:adapter-rxjava3" , version.ref = "retrofit" }
 
 
 

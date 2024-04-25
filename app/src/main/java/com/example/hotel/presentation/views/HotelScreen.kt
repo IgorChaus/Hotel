@@ -3,7 +3,6 @@ package com.example.hotel.presentation.views
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,20 +10,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.hotel.R
+import com.example.hotel.common.BaseFragment
 import com.example.hotel.common.appComponent
+import com.example.hotel.common.setPeculiaritiesLayout
 import com.example.hotel.databinding.HotelScreenBinding
 import com.example.hotel.presentation.adapter.ContentAdapter
 import com.example.hotel.presentation.adapter.ViewType
-import com.example.hotel.presentation.viewmodels.HotelViewModel
-import com.example.hotel.common.BaseFragment
-import com.example.hotel.common.repeatOnCreated
-import com.example.hotel.common.setPeculiaritiesLayout
 import com.example.hotel.presentation.adapter.WrapperPhoto
+import com.example.hotel.presentation.viewmodels.HotelViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 class HotelScreen: BaseFragment<HotelScreenBinding>(){

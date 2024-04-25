@@ -71,7 +71,8 @@ dependencies {
     kapt(libs.dagger.compiler)
 
     // RxJava 3
-    implementation libs.rxandroid
-    implementation libs.rxjava
+    implementation (libs.rxandroid)
+    implementation (libs.rxjava)
+    implementation (libs.rxretrofit)
 
 }

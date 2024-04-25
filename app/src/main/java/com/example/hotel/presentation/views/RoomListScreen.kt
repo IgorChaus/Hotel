@@ -9,13 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.hotel.common.BaseFragment
 import com.example.hotel.common.appComponent
 import com.example.hotel.databinding.RoomListScreenBinding
 import com.example.hotel.domain.models.Room
 import com.example.hotel.presentation.adapter.ContentAdapter
 import com.example.hotel.presentation.viewmodels.RoomListViewModel
-import com.example.hotel.common.BaseFragment
-import com.example.hotel.common.repeatOnCreated
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
