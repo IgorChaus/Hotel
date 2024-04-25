@@ -6,6 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.hotel.domain.models.Hotel
 import com.example.hotel.domain.repositories.NetworkRepository
 import com.example.hotel.domain.models.Response
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -16,25 +22,31 @@ class HotelViewModel @Inject constructor(
     private val repository: NetworkRepository
 ) : ViewModel() {
 
-    private val _hotel = MutableSharedFlow<Hotel>()
-    val hotel = _hotel.asSharedFlow()
+    private val _hotel = BehaviorSubject.create<Hotel>()
+    val hotel: Observable<Hotel>
+        get() = _hotel.hide()
 
-    fun getHotel(){
-        viewModelScope.launch(coroutineExceptionHandler) {
-            val response = repository.getHotel()
-            when (response) {
-                is Response.Success -> _hotel.emit(response.data)
-                is Response.Error -> handleException(response.exception)
-            }
-        }
+    private val disposables = CompositeDisposable()
+
+    fun getHotel() {
+        disposables.add(
+            repository.getHotel()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ hotel ->
+                    _hotel.onNext(hotel)
+                }, { error ->
+                    handleError(error)
+                })
+        )
     }
 
-    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
-        handleException(exception)
+    private fun handleError(error: Throwable) {
+        Log.i("MyTag", "Error: $error")
     }
 
-    private fun handleException(throwable: Throwable?) {
-        Log.i("MyTag", "Exception $throwable")
+    fun clearDisposables() {
+        disposables.clear()
     }
 
 }

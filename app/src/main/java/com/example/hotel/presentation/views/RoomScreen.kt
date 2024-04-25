@@ -20,6 +20,9 @@ import com.example.hotel.common.BaseFragment
 import com.example.hotel.presentation.viewmodels.RoomViewModel
 import com.example.hotel.domain.models.TouristData
 import com.example.hotel.common.repeatOnCreated
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class RoomScreen: BaseFragment<RoomScreenBinding>() {
@@ -37,6 +40,8 @@ class RoomScreen: BaseFragment<RoomScreenBinding>() {
     private val viewModel: RoomViewModel by viewModels { viewModelFactory }
 
     private lateinit var expandableListAdapter: ExpandableListAdapter
+
+    private val disposables = CompositeDisposable()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -162,40 +167,46 @@ class RoomScreen: BaseFragment<RoomScreenBinding>() {
         }
     }
 
+
     @SuppressLint("SetTextI18n")
     private fun setReservationObserver() {
-        viewModel.reservation.repeatOnCreated(this) { reservation ->
-            binding.hotelInformation.tvHotelName.text = reservation.hotelName
-            binding.hotelInformation.tvHotelAddress.text = reservation.hotelAddress
-            binding.hotelInformation.rating.tvRating.text = reservation.horating.toString()
-            binding.hotelInformation.rating.tvRatingName.text = reservation.ratingName
+        disposables.add(
+            viewModel.reservation
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { reservation ->
+                    binding.hotelInformation.tvHotelName.text = reservation.hotelName
+                    binding.hotelInformation.tvHotelAddress.text = reservation.hotelAddress
+                    binding.hotelInformation.rating.tvRating.text = reservation.horating.toString()
+                    binding.hotelInformation.rating.tvRatingName.text = reservation.ratingName
 
-            binding.tourInformation.departure.text = reservation.departure
-            binding.tourInformation.destinition.text = reservation.arrivalCountry
-            binding.tourInformation.description.text = reservation.room
-            binding.tourInformation.dates.text = "${reservation.tourDateStart} " +
-                    "- ${reservation.tourDateStop}"
-            binding.tourInformation.hotelName.text = reservation.hotelName
-            binding.tourInformation.nutrition.text = reservation.nutrition
-            binding.tourInformation.duration.text = reservation.numberOfNights.toString()
+                    binding.tourInformation.departure.text = reservation.departure
+                    binding.tourInformation.destinition.text = reservation.arrivalCountry
+                    binding.tourInformation.description.text = reservation.room
+                    binding.tourInformation.dates.text = "${reservation.tourDateStart} " +
+                            "- ${reservation.tourDateStop}"
+                    binding.tourInformation.hotelName.text = reservation.hotelName
+                    binding.tourInformation.nutrition.text = reservation.nutrition
+                    binding.tourInformation.duration.text = reservation.numberOfNights.toString()
 
-            val tourPrice = String.format("%,d", reservation.tourPrice)
-                .replace(",", " ") + getString(R.string.rub)
-            binding.totalPrice.tvTourPrice.text = tourPrice
-            val fuelPrice = String.format("%,d", reservation.fuelCharge)
-                .replace(",", " ") + getString(R.string.rub)
-            binding.totalPrice.tvFuelPrice.text = fuelPrice
-            val servicePrice = String.format("%,d", reservation.serviceCharge)
-                .replace(",", " ") + getString(R.string.rub)
-            binding.totalPrice.tvServicePrice.text = servicePrice
-            val total = reservation.tourPrice + reservation
-                .fuelCharge + reservation.serviceCharge
-            val totalString = String.format("%,d", total).replace(",", " ") +
-                    getString(R.string.rub)
-            binding.totalPrice.tvTotal.text = totalString
-            binding.buttonPay.text = getString(R.string.pay) + " $totalString"
+                    val tourPrice = String.format("%,d", reservation.tourPrice)
+                        .replace(",", " ") + getString(R.string.rub)
+                    binding.totalPrice.tvTourPrice.text = tourPrice
+                    val fuelPrice = String.format("%,d", reservation.fuelCharge)
+                        .replace(",", " ") + getString(R.string.rub)
+                    binding.totalPrice.tvFuelPrice.text = fuelPrice
+                    val servicePrice = String.format("%,d", reservation.serviceCharge)
+                        .replace(",", " ") + getString(R.string.rub)
+                    binding.totalPrice.tvServicePrice.text = servicePrice
+                    val total = reservation.tourPrice + reservation
+                        .fuelCharge + reservation.serviceCharge
+                    val totalString = String.format("%,d", total).replace(",", " ") +
+                            getString(R.string.rub)
+                    binding.totalPrice.tvTotal.text = totalString
+                    binding.buttonPay.text = getString(R.string.pay) + " $totalString"
 
-        }
+                }
+        )
+
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -217,6 +228,13 @@ class RoomScreen: BaseFragment<RoomScreenBinding>() {
     private fun launchFinishScreen() {
         findNavController().navigate(RoomScreenDirections.actionRoomScreenToFinishScreen())
     }
+
+    override fun onDestroy() {
+        disposables.dispose()
+        viewModel.clearDisposables()
+        super.onDestroy()
+    }
+
 
     companion object{
         const val MASK = "+7 (***) ***-**-**"

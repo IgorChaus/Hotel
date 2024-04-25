@@ -16,6 +16,8 @@ import com.example.hotel.presentation.adapter.ContentAdapter
 import com.example.hotel.presentation.viewmodels.RoomListViewModel
 import com.example.hotel.common.BaseFragment
 import com.example.hotel.common.repeatOnCreated
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
 
@@ -26,6 +28,8 @@ class RoomListScreen: BaseFragment<RoomListScreenBinding>() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private val viewModel: RoomListViewModel by viewModels { viewModelFactory }
+
+    private val disposables = CompositeDisposable()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -46,9 +50,13 @@ class RoomListScreen: BaseFragment<RoomListScreenBinding>() {
         val adapter = ContentAdapter { showRoom(it) }
         binding.rv.adapter = adapter
 
-        viewModel.rooms.repeatOnCreated(this) { rooms ->
-            adapter.items = rooms
-        }
+        disposables.add(
+            viewModel.rooms
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { rooms ->
+                    adapter.items = rooms
+                }
+        )
 
         binding.headerScreen.tvHeader.text = args.hotelName
 
@@ -65,6 +73,12 @@ class RoomListScreen: BaseFragment<RoomListScreenBinding>() {
 
     private fun showRoom(room: Room) {
         findNavController().navigate(RoomListScreenDirections.actionRoomListScreenToRoomScreen())
+    }
+
+    override fun onDestroy() {
+        disposables.dispose()
+        viewModel.clearDisposables()
+        super.onDestroy()
     }
 
 }

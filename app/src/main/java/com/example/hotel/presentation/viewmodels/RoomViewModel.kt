@@ -3,12 +3,19 @@ package com.example.hotel.presentation.viewmodels
 import android.app.Application
 import android.util.Log
 import android.util.Patterns
+import androidx.annotation.MainThread
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hotel.R
 import com.example.hotel.domain.models.Reservation
 import com.example.hotel.domain.repositories.NetworkRepository
 import com.example.hotel.domain.models.Response
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -20,14 +27,17 @@ class RoomViewModel @Inject constructor(
     private val application: Application
 ) : ViewModel() {
 
-    private val _reservation = MutableSharedFlow<Reservation>()
-    val reservation = _reservation.asSharedFlow()
+    private val _reservation = BehaviorSubject.create<Reservation>()
+    val reservation: Observable<Reservation>
+        get() = _reservation.hide()
 
     private val _emailError = MutableSharedFlow<Boolean>()
     val emailError = _emailError.asSharedFlow()
 
     private val _showEmptyFields = MutableSharedFlow<Boolean>()
     val showEmptyFields = _showEmptyFields.asSharedFlow()
+
+    private val disposables = CompositeDisposable()
 
     var listTouristGroups = arrayListOf("Первый турист")
     private val touristInfo = listOf(
@@ -42,27 +52,23 @@ class RoomViewModel @Inject constructor(
         "Первый турист" to touristInfo,
     )
 
-    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
-        handleException(exception)
-    }
-
     init {
         getReservation()
     }
 
-    private fun getReservation() {
-        viewModelScope.launch(coroutineExceptionHandler) {
-            val response = repository.getReservation()
-            when (response) {
-                is Response.Success -> _reservation.emit(response.data)
-                is Response.Error -> handleException(response.exception)
-            }
-        }
+    private fun getReservation(){
+        disposables.add(
+            repository.getReservation()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(_reservation::onNext, this::handleError)
+        )
     }
 
-    private fun handleException(throwable: Throwable?) {
-        Log.i("MyTag", "Error $throwable")
+    private fun handleError(error: Throwable) {
+        Log.i("MyTag", "Error: $error")
     }
+
 
     fun checkEmail(email: String){
         viewModelScope.launch {
@@ -112,6 +118,10 @@ class RoomViewModel @Inject constructor(
             application.getString(R.string.tenth)
         )
         return numbers[n-1]
+    }
+
+    fun clearDisposables() {
+        disposables.clear()
     }
 
 }

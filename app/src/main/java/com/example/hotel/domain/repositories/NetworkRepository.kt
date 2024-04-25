@@ -4,12 +4,13 @@ import com.example.hotel.domain.models.Hotel
 import com.example.hotel.domain.models.Reservation
 import com.example.hotel.domain.models.Room
 import com.example.hotel.domain.models.Response
+import io.reactivex.rxjava3.core.Single
 
 interface NetworkRepository {
 
-    suspend fun getHotel(): Response<Hotel>
+    fun getHotel(): Single<Hotel>
 
-    suspend fun getRooms(): Response<List<Room>>
+    fun getRooms(): Single<List<Room>>
 
-    suspend fun getReservation(): Response<Reservation>
+    fun getReservation(): Single<Reservation>
 }

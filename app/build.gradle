@@ -3,7 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
-    id 'androidx.navigation.safeargs'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -69,5 +69,9 @@ dependencies {
     // Dagger 2
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
+
+    // RxJava 3
+    implementation libs.rxandroid
+    implementation libs.rxjava
 
 }

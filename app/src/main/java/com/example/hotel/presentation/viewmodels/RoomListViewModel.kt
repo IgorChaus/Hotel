@@ -6,6 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.hotel.domain.models.Room
 import com.example.hotel.domain.repositories.NetworkRepository
 import com.example.hotel.domain.models.Response
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -16,25 +21,29 @@ class RoomListViewModel @Inject constructor(
     private val repository: NetworkRepository
 ) : ViewModel() {
 
-    private val _rooms = MutableSharedFlow<List<Room>>()
-    val rooms = _rooms.asSharedFlow()
+    private val _rooms = BehaviorSubject.create<List<Room>>()
+    val rooms: Observable<List<Room>>
+        get() = _rooms.hide()
+
+    private val disposables = CompositeDisposable()
+
 
     fun getRooms(){
-        viewModelScope.launch(coroutineExceptionHandler) {
-            val response = repository.getRooms()
-            when (response) {
-                is Response.Success -> _rooms.emit(response.data)
-                is Response.Error -> handleException(response.exception)
-            }
-        }
+        disposables.add(
+            repository.getRooms()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(_rooms::onNext, this::handleError)
+
+        )
     }
 
-    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
-        handleException(exception)
+    private fun handleError(error: Throwable) {
+        Log.i("MyTag", "Error: $error")
     }
 
-    private fun handleException(throwable: Throwable?) {
-        Log.i("MyTag", "Exception $throwable")
+    fun clearDisposables() {
+        disposables.clear()
     }
 
 }
