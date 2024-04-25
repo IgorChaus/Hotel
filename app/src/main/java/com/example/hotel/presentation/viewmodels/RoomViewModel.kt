@@ -31,11 +31,13 @@ class RoomViewModel @Inject constructor(
     val reservation: Observable<Reservation>
         get() = _reservation.hide()
 
-    private val _emailError = MutableSharedFlow<Boolean>()
-    val emailError = _emailError.asSharedFlow()
+    private val _emailError = BehaviorSubject.create<Boolean>()
+    val emailError: Observable<Boolean>
+        get() = _emailError.hide()
 
-    private val _showEmptyFields = MutableSharedFlow<Boolean>()
-    val showEmptyFields = _showEmptyFields.asSharedFlow()
+    private val _showEmptyFields = BehaviorSubject.create<Boolean>()
+    val showEmptyFields: Observable<Boolean>
+        get() = _showEmptyFields.hide()
 
     private val disposables = CompositeDisposable()
 
@@ -69,18 +71,12 @@ class RoomViewModel @Inject constructor(
         Log.i("MyTag", "Error: $error")
     }
 
-
     fun checkEmail(email: String){
-        viewModelScope.launch {
-            _emailError.emit(!Patterns.EMAIL_ADDRESS.matcher(email).matches() && email.isNotEmpty())
-        }
+        _emailError.onNext(!Patterns.EMAIL_ADDRESS.matcher(email).matches() && email.isNotEmpty())
     }
 
-    fun resetError(){
-        viewModelScope.launch{
-            _emailError.emit(false)
-        }
-
+    fun resetError() {
+        _emailError.onNext(false)
     }
 
     fun addNewTourist(){
@@ -95,12 +91,12 @@ class RoomViewModel @Inject constructor(
         for (i in 0 until listTouristGroups.size) {
             for (j in 0..5) {
                 if (touristList[Pair(i, j)] == null) {
-                    viewModelScope.launch { _showEmptyFields.emit(true) }
+                    _showEmptyFields.onNext(true)
                     return true
                 }
             }
         }
-        viewModelScope.launch { _showEmptyFields.emit(false) }
+        _showEmptyFields.onNext(false)
         return false
     }
 

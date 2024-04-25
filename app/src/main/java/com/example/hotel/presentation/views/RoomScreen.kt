@@ -13,15 +13,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.hotel.R
-import com.example.hotel.presentation.adapter.ExpandableListAdapter
+import com.example.hotel.common.BaseFragment
 import com.example.hotel.common.appComponent
 import com.example.hotel.databinding.RoomScreenBinding
-import com.example.hotel.common.BaseFragment
-import com.example.hotel.presentation.viewmodels.RoomViewModel
 import com.example.hotel.domain.models.TouristData
-import com.example.hotel.common.repeatOnCreated
+import com.example.hotel.presentation.adapter.ExpandableListAdapter
+import com.example.hotel.presentation.viewmodels.RoomViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -136,13 +134,17 @@ class RoomScreen: BaseFragment<RoomScreenBinding>() {
             R.drawable.rounded_corners_error
         )
 
-        viewModel.emailError.repeatOnCreated(this) {
-            if (it) {
-                binding.customInfo.containerEmail.background = errorColor
-            } else {
-                binding.customInfo.containerEmail.background = usualColor
-            }
-        }
+        disposables.add(
+            viewModel.emailError
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    if (it) {
+                        binding.customInfo.containerEmail.background = errorColor
+                    } else {
+                        binding.customInfo.containerEmail.background = usualColor
+                    }
+                }
+        )
 
         binding.customInfo.etEmail.setOnFocusChangeListener { viewEditText, hasFocus ->
             if (!hasFocus) {
@@ -155,16 +157,21 @@ class RoomScreen: BaseFragment<RoomScreenBinding>() {
     }
 
     private fun setShowEmptyFieldsObserver() {
-        viewModel.showEmptyFields.repeatOnCreated(this) {
-            if (it) {
-                expandableListAdapter.isShowError = true
-                expandableListAdapter.notifyDataSetChanged()
-                val expandableListView = binding.touristInfo.expandableListView
-                for (i in 0 until expandableListView.expandableListAdapter.groupCount) {
-                    expandableListView.expandGroup(i)
+        disposables.add(
+            viewModel.showEmptyFields
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    if (it) {
+                        expandableListAdapter.isShowError = true
+                        expandableListAdapter.notifyDataSetChanged()
+                        val expandableListView = binding.touristInfo.expandableListView
+                        for (i in 0 until expandableListView.expandableListAdapter.groupCount) {
+                            expandableListView.expandGroup(i)
+                        }
+                    }
                 }
-            }
-        }
+        )
+
     }
 
 

@@ -136,15 +136,3 @@ fun ReservationDTO.toModel(): Reservation{
     )
 }
 
-fun <T> Flow<T>.repeatOnCreated(lifecycleOwner: LifecycleOwner) {
-    lifecycleOwner.lifecycleScope.launch {
-        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
-            this@repeatOnCreated.collect()
-        }
-    }
-}
-
-fun <T> Flow<T>.repeatOnCreated(lifecycleOwner: LifecycleOwner, action: suspend (T) -> Unit) {
-    onEach { action(it) }
-        .repeatOnCreated(lifecycleOwner)
-}
